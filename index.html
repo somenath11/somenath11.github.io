@@ -212,11 +212,11 @@
                 <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {
                         const btn = document.querySelector('.contact-form button');
                         btn.classList.remove('btn-loading');
-                        btn.textContent = 'Message Sent!';
+                        btn.textContent = 'Message Submitted!';
                         btn.style.backgroundColor = '#28a745'; 
                         
                         setTimeout(() => {
-                            btn.textContent = 'Send Message';
+                            btn.textContent = 'Submit';
                             btn.style.backgroundColor = ''; 
                             document.querySelector('.contact-form').reset();
                         }, 3000);
@@ -269,3 +269,4 @@
 
 
 </html>
+
