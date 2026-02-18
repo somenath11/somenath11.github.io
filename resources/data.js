@@ -148,18 +148,37 @@ const portfolioData = {
     // Certifications
     certifications: [
         {
-            title: "AWS Certified Cloud Practitioner",
-            issuer: "Amazon Web Services",
-            year: "2024",
-            credentialLink: "#" // Replace with actual link
+            title: "Career Essentials in Data Analysis by Microsoft and LinkedIn",
+            issuer: "LinkedIn Learning",
+            year: "June 2025",
+            credentialLink: "https://www.linkedin.com/learning/certificates/1899cbc5a9bcf6d12c823c702aeed4c975e463580ebceb87222d61ca65718aee" // Replace with actual link
         },
         {
-            title: "Google Data Analytics Certificate",
-            issuer: "Coursera",
-            year: "2023",
-            credentialLink: "#" // Replace with actual link
+            title: "Deloitte Australia - Data Analytics Job Simulation",
+            issuer: "Forage",
+            year: "May 2025",
+            credentialLink: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_cYkMuanGSYDTrvMry_1748362553606_completion_certificate.pdf" // Replace with actual link
+        },
+        {
+            title: "Commonwealth Bank - Introduction to Data Science Job Simulation",
+            issuer: "Forage",
+            year: "May 2025",
+            credentialLink: "https://www.theforage.com/completion-certificates/2sNmYuurxgpFYawco/smwfytX3mcLboA9bf_2sNmYuurxgpFYawco_cYkMuanGSYDTrvMry_1747032386986_completion_certificate.pdf" // Replace with actual link
+        },
+        {
+            title: "Cognizant - Artificial Intelligence Job Simulation",
+            issuer: "Forage",
+            year: "June 2024",
+            credentialLink: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Cognizant/5N2ygyhzMWjKQmgCK_Cognizant_cYkMuanGSYDTrvMry_1718646885974_completion_certificate.pdf" // Replace with actual link
+        },
+        {
+            title: "AWS Academy Cloud Foundations",
+            issuer: "Amazon Web Services (AWS)",
+            year: "Sept 2023",
+            credentialLink: "https://www.credly.com/badges/2022e39a-a797-4f35-a533-5a15904b193b" // Replace with actual link
         }
     ]
 };
+
 
 
