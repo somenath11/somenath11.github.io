@@ -19,8 +19,8 @@ const portfolioData = {
 
     // Hero Highlights
     heroHighlights: [
-        "⚡ Cloud Engineer",
-        "🚀 Data Analyst"
+        "🌐 Cloud Engineer",
+        "📊 Data Analyst"
     ],
 
     // Hero Skills Ticker (Deprecated/Fallback)
@@ -35,7 +35,7 @@ const portfolioData = {
             "I'm interested in building something awesome with code and currently focused on <span class='highlight'>Data Science</span>, <span class='highlight'>Cloud Computing</span> and <span class='highlight'>AI</span>.",
             "When I'm not coding I play games with my friends, watch some show on Netflix, or if the weather's good, play Badminton! 🏸 or cricket! 🏏"
         ],
-        aboutImage: "resources/media/Somenath_Sau.jpg",
+        aboutImage: "resources/media/Somenath-1.png",
         techStack: [
             { name: "SQL", icon: "database" },
             { name: "Python", icon: "code" },
