@@ -72,14 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     heroSkillsContainer.className = 'hero-highlights'; // Change class
     heroSkillsContainer.innerHTML = ''; // Clear
 
-    /* COMMENTED OUT PER USER REQUEST: HERO HIGHLIGHTS
-    portfolioData.heroHighlights.forEach(highlight => {
-        const item = document.createElement('div');
-        item.classList.add('highlight-item');
-        item.innerHTML = highlight; // Contains emojis
-        heroSkillsContainer.appendChild(item);
-    });
-    */
 
     // 2. Render About Section (Redesigned)
     const knowledgeContainer = document.getElementById('knowledgeContainer');
