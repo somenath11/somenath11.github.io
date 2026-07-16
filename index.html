@@ -17,6 +17,11 @@
     <script src="https://unpkg.com/lucide@0.477.0"></script>
 
     <link rel="stylesheet" href="resources/styles.css?v=36.0">
+    <script>
+        // Inline theme initialization to prevent flash
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
 </head>
 
 <body>
@@ -33,11 +38,21 @@
                 <li><a href="#education">Education</a></li>
                 <li><a href="#certifications">Certifications</a></li>
                 <li><a href="#contact" class="btn-primary">Contact Me</a></li>
+                <li class="desktop-toggle-only">
+                    <button class="theme-toggle-btn" aria-label="Toggle Theme">
+                        <i data-lucide="sun"></i>
+                    </button>
+                </li>
             </ul>
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="mobile-nav-right">
+                <div class="menu-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <button class="theme-toggle-btn mobile-toggle-only" aria-label="Toggle Theme">
+                    <i data-lucide="sun"></i>
+                </button>
             </div>
         </div>
     </nav>

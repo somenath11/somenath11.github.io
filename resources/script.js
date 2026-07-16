@@ -633,6 +633,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- THEME TOGGLE LOGIC ---
+    const themeToggleBtns = document.querySelectorAll('.theme-toggle-btn');
+    
+    function updateThemeIcon(theme) {
+        themeToggleBtns.forEach(btn => {
+            btn.innerHTML = `<i data-lucide="${theme === 'dark' ? 'moon' : 'sun'}"></i>`;
+        });
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+    
+    // Initialize theme icon on load
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    updateThemeIcon(currentTheme);
+    
+    themeToggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const activeTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const targetTheme = activeTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            localStorage.setItem('theme', targetTheme);
+            updateThemeIcon(targetTheme);
+        });
+    });
+
 });
 
 // Typewriter Effect for Name

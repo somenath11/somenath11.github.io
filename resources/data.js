@@ -5,7 +5,7 @@ const portfolioData = {
     microline: "Power BI | Dashboard | Data Analysis | Generative AI | Prompt Engineering",
     heroImage: "resources/assets/hero/Somenath_Sau.webp",
     resumeLink: "resources/assets/docs/Somenath-Sau-DataAnalyst.pdf",
-    email: "mailto:somenathsau@gmail.com",
+    email: "somenathsau@gmail.com",
 
     bio: "✔ Transform complex data into insights that improve reporting efficiency. " +
         "<br>✔ Build automated dashboards using Python, SQL, and Power BI. " +
@@ -163,7 +163,7 @@ const portfolioData = {
             category: "Business Intelligence",
             image: "resources/assets/images/CMCS2123.png",
             codeLink: "https://github.com/somenathsau/Excel-Projects/tree/main/P1-California_Retail_Sales_Analysis",
-            demoLink: "https://1drv.ms/x/c/451F38CD7B3963F9/IQBFGRKfvbVGSYZa-Vi-SkxdAR-LuJ0s4AhJxUmpy9Gvl6M?e=GBag6f"
+            demoLink: "https://1drv.ms/x/c/451F38CD7B3963F9/IQBFGRKfvbVGSYZa-Vi-SkxdAR-LuJ0s4AhJxUmpy9Gvl6M?e=rWvpfF"
         },
         {
             title: "Uber Data Analysis",
