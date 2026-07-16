@@ -182,7 +182,7 @@ const portfolioData = {
             category: "Data Analysis",
             image: "resources/assets/images/Uber_Project.webp",
             codeLink: "https://github.com/somenathsau/CodeClause-data-science-internship/tree/main/Project%202%20-%20Uber%20Data%20Analysis",
-            demoLink: "https://nbviewer.org/github/somenathsau/CodeClause-data-science-internship/blob/main/Project%202%20-%20Uber%20Data%20Analysis/Uber%20data%20analysis.ipynb"
+            demoLink: "https://github.com/somenathsau/CodeClause-data-science-internship/blob/main/Project%202%20-%20Uber%20Data%20Analysis/Uber%20data%20analysis.ipynb"
         },
         {
             title: "Crime Data Analysis in India",
@@ -201,7 +201,7 @@ const portfolioData = {
             category: "Data Analysis",
             image: "resources/assets/images/crime_correlation_heatmap.webp",
             codeLink: "https://github.com/somenathsau/Crime_Report_in_India_2013",
-            demoLink: "https://nbviewer.org/github/somenathsau/Crime_Report_in_India_2013/blob/main/Crime_Report_Analysis_2013.ipynb"
+            demoLink: "https://github.com/somenathsau/Crime_Report_in_India_2013/blob/main/Crime_Report_Analysis_2013.ipynb"
         },
         // {
         //     title: "AI-Assisted Portfolio Website",
