@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="tech-stack-v2">${techPillsHtml}</div>
                     <div class="project-card-actions">
                         <button class="btn-primary open-modal-btn" data-index="${index}">View Case Study</button>
-                        <a href="${project.codeLink}" class="btn-secondary" target="_blank"><i data-lucide="github"></i> Code</a>
+                        <a href="${project.codeLink}" class="btn-secondary" target="_blank"><i data-lucide="github"></i> Repository</a>
                     </div>
                 </div>
             `;
