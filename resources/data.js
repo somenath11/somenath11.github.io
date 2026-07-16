@@ -181,8 +181,8 @@ const portfolioData = {
             techStack: ["Python", "Numpy", "Pandas", "Matplotlib", "Seaborn"],
             category: "Data Analysis",
             image: "resources/assets/images/Uber_Project.webp",
-            codeLink: "https://github.com/somenathsau/CodeClause-data-science-internship/tree/main/Project%203%20-%20Uber%20Data%20Analysis",
-            demoLink: "https://nbviewer.org/github/somenathsau/CodeClause-data-science-internship/blob/main/Project%203%20-%20Uber%20Data%20Analysis/Uber%20data%20analysis.ipynb"
+            codeLink: "https://github.com/somenathsau/CodeClause-data-science-internship/tree/main/Project%202%20-%20Uber%20Data%20Analysis",
+            demoLink: "https://nbviewer.org/github/somenathsau/CodeClause-data-science-internship/blob/main/Project%202%20-%20Uber%20Data%20Analysis/Uber%20data%20analysis.ipynb"
         },
         {
             title: "Crime Data Analysis in India",
