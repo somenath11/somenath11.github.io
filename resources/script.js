@@ -137,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="edu-tag">${edu.tag}</div>
                 </div>
                 <p class="edu-desc">${edu.description}</p>
-                <a href="${edu.website}" target="_blank" class="btn-primary edu-cta">Visit Website</a>
             `;
             educationGrid.appendChild(card);
         });
@@ -239,15 +238,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             card.innerHTML = `
                 <div class="project-card-image">
-                    <img src="${project.image}" alt="${project.title}" loading="lazy">
+                    <div class="project-image-wrapper">
+                        <img src="${project.image}" alt="${project.title}" loading="lazy">
+                    </div>
                 </div>
                 <div class="project-card-content">
                     <h3 class="project-title">${project.title}</h3>
                     ${insightHtml}
-                    <p class="project-desc">${project.description}</p>
                     <div class="tech-stack-v2">${techPillsHtml}</div>
                     <div class="project-card-actions">
-                        <button class="btn-primary open-modal-btn" data-index="${index}">View Case Study</button>
+                        <button class="btn-primary open-modal-btn" data-index="${index}">View Details</button>
                         <a href="${project.codeLink}" class="btn-secondary" target="_blank"><i data-lucide="github"></i> Repository</a>
                     </div>
                 </div>
