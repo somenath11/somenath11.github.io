@@ -26,7 +26,53 @@
 
 <body>
 
-    <!-- Navbar -->
+    <!-- Desktop Fixed Left Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-profile-row">
+                <div class="sidebar-avatar">
+                    <img src="resources/assets/hero/Somenath_Sau.webp" 
+                         srcset="resources/assets/hero/Somenath_Sau-small.webp 600w, resources/assets/hero/Somenath_Sau.webp 1200w" 
+                         sizes="60px" 
+                         alt="Somenath Sau"
+                         fetchpriority="high">
+                </div>
+                <div class="sidebar-info">
+                    <h2 class="sidebar-name" id="sidebarName">SOMENATH SAU</h2>
+                    <p class="sidebar-role" id="sidebarRole">Data Analyst</p>
+                </div>
+            </div>
+
+            <a href="javascript:void(0)" class="btn-primary sidebar-resume-btn open-resume-modal">
+                <i data-lucide="download"></i> Download Resume
+            </a>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#home" class="active"><i data-lucide="home"></i><span>Home</span></a></li>
+                <li><a href="#projects"><i data-lucide="folder-git-2"></i><span>Projects</span></a></li>
+                <li><a href="#skills"><i data-lucide="wrench"></i><span>Skills</span></a></li>
+                <li><a href="#experience"><i data-lucide="briefcase"></i><span>Experience</span></a></li>
+                <li><a href="#education"><i data-lucide="graduation-cap"></i><span>Education</span></a></li>
+                <li><a href="#certifications"><i data-lucide="award"></i><span>Certifications</span></a></li>
+                <li><a href="#contact"><i data-lucide="mail"></i><span>Contact</span></a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-bottom-row">
+                <div class="sidebar-socials" id="sidebarSocials">
+                    <!-- Dynamic Social Icons -->
+                </div>
+                <button class="theme-toggle-btn sidebar-theme-btn" aria-label="Toggle Theme">
+                    <i data-lucide="sun"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Top Navbar -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo"><i data-lucide="code-xml"></i></a>
@@ -56,6 +102,9 @@
             </div>
         </div>
     </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content-wrapper" id="mainContent">
 
     <!-- Hero Section -->
     <section id="home" class="hero-section">
@@ -270,7 +319,7 @@
             <a href="#home" class="back-to-top" id="backToTop"><i data-lucide="arrow-up"></i></a>
         </div>
     </footer>
-    </footer>
+    </main>
 
     <!-- Resume Modal -->
     <div id="resumeModal" class="modal-overlay">

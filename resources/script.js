@@ -453,6 +453,16 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
+    // Render Sidebar Socials
+    const sidebarSocials = document.getElementById('sidebarSocials');
+    if (sidebarSocials) {
+        sidebarSocials.innerHTML = `
+            <a href="${linkedin}" target="_blank" class="footer-social-link linkedin" title="LinkedIn"><i data-lucide="linkedin"></i></a>
+            <a href="${github}" target="_blank" class="footer-social-link github" title="GitHub"><i data-lucide="github"></i></a>
+            <a href="${email}" class="footer-social-link email" title="Email"><i data-lucide="mail"></i></a>
+        `;
+    }
+
     // Initialize Icons AFTER dynamic content is added
     lucide.createIcons();
 
@@ -586,52 +596,72 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- SINGLE PAGE SCROLL SPY LOGIC ---
-    const pageSections = ['home', 'about', 'projects', 'skills', 'experience', 'education', 'certifications', 'contact'];
-    const sectionElements = pageSections.map(id => document.getElementById(id)).filter(Boolean);
-    const navLinksList = document.querySelectorAll('.nav-links a[href^="#"]');
+    // --- SINGLE PAGE APPLICATION (SPA) SECTION ROUTING ---
+    function setActiveSection(targetHash) {
+        const rawId = (targetHash || '#home').replace('#', '');
+        const validSections = ['home', 'about', 'projects', 'skills', 'experience', 'education', 'certifications', 'contact'];
+        
+        let activeId = validSections.includes(rawId) ? rawId : 'home';
 
-    // Scroll Spy Observer
-    const spyOptions = {
-        root: null,
-        rootMargin: '-50% 0px -50% 0px', // Trigger when section crosses middle of viewport
-        threshold: 0
-    };
+        // Hide all sections
+        document.querySelectorAll('.hero-section, .section').forEach(sec => {
+            sec.classList.remove('active-section');
+        });
 
-    const scrollSpyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const currentId = entry.target.id;
-                navLinksList.forEach(link => {
+        // Show active section(s)
+        if (activeId === 'home' || activeId === 'about') {
+            const homeSec = document.getElementById('home');
+            const aboutSec = document.getElementById('about');
+            if (homeSec) homeSec.classList.add('active-section');
+            if (aboutSec) aboutSec.classList.add('active-section');
+            activeId = 'home';
+        } else {
+            const targetSec = document.getElementById(activeId);
+            if (targetSec) targetSec.classList.add('active-section');
+        }
+
+        // Trigger animations for .fade-up inside active sections
+        document.querySelectorAll('.active-section .fade-up').forEach(el => {
+            el.classList.add('visible');
+        });
+
+        // Update nav links active state in both desktop sidebar and mobile navbar
+        document.querySelectorAll('.nav-links a, .sidebar-nav a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href) {
+                const linkId = href.replace('#', '');
+                if (linkId === activeId) {
+                    link.classList.add('active');
+                } else {
                     link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${currentId}`) {
-                        link.classList.add('active');
-                    }
-                });
+                }
             }
         });
-    }, spyOptions);
 
-    sectionElements.forEach(sec => scrollSpyObserver.observe(sec));
+        // Scroll to top of main content area
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
 
-    // Smooth Scrolling for Anchor Links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-
-            const targetSectionId = targetId.substring(1);
-            const targetElement = document.getElementById(targetSectionId);
-            
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
+    // Attach click listeners to all hash links
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                e.preventDefault();
+                setActiveSection(href);
+                history.pushState(null, null, href);
             }
-            
-            // Clean URL
-            history.replaceState(null, null, ' ');
         });
     });
+
+    // Handle browser navigation (back/forward)
+    window.addEventListener('popstate', () => {
+        setActiveSection(window.location.hash);
+    });
+
+    // Initialize SPA section on page load
+    setActiveSection(window.location.hash || '#home');
 
     // --- THEME TOGGLE LOGIC ---
     const themeToggleBtns = document.querySelectorAll('.theme-toggle-btn');
