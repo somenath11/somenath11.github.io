@@ -107,36 +107,37 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
-    // 3. Render Education Section
+    // 3. Render Education Section (Option H — Illustrated Badge Card Stack with Logos)
     const educationGrid = document.getElementById('educationGrid');
     if (educationGrid) {
+        educationGrid.innerHTML = '';
         portfolioData.education.forEach(edu => {
             const card = document.createElement('div');
-            card.className = 'edu-card fade-up';
+            card.className = 'edu-option-h-card fade-up';
+            
+            const scoreText = edu.scoreLabel ? `${edu.score} ${edu.scoreLabel}` : edu.score;
             
             const logoHtml = edu.logo 
-                ? `<div class="edu-logo-container"><img src="${edu.logo}" alt="${edu.badge}" class="edu-logo-img"></div>`
-                : `<div class="edu-logo-container edu-logo-initials">${edu.badge}</div>`;
-
+                ? `<img src="${edu.logo}" alt="${edu.badge}" class="edu-h-badge-img">`
+                : `<span class="edu-h-badge-initials">${edu.badge}</span>`;
+            
             card.innerHTML = `
-                <div class="edu-card-top">
-                    ${logoHtml}
-                    <div class="edu-header-right">
-                        <div class="edu-inst">${edu.institution}</div>
-                        <div class="edu-years">${edu.years}</div>
+                <div class="edu-h-badge-container">
+                    <div class="edu-h-badge-circle">
+                        ${logoHtml}
                     </div>
                 </div>
-                <h3 class="edu-degree">${edu.degree}</h3>
-                <div class="edu-location">${edu.location}</div>
-                <hr class="edu-divider">
-                <div class="edu-score-section">
-                    <div class="edu-score-left">
-                        <div class="edu-score-num">${edu.score}</div>
-                        <div class="edu-score-label">${edu.scoreLabel}</div>
+                <div class="edu-h-content">
+                    <div class="edu-h-header">
+                        <h3 class="edu-h-degree">${edu.degree}</h3>
+                        <span class="edu-h-years">${edu.years}</span>
                     </div>
-                    <div class="edu-tag">${edu.tag}</div>
+                    <div class="edu-h-institution">${edu.institution}, ${edu.location}</div>
+                    <div class="edu-h-badges">
+                        <span class="edu-badge-blue">${scoreText}</span>
+                        <span class="edu-badge-green">${edu.description}</span>
+                    </div>
                 </div>
-                <p class="edu-desc">${edu.description}</p>
             `;
             educationGrid.appendChild(card);
         });
@@ -715,31 +716,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- UI/UX INTERATIONS ---
 
-    // Mobile Menu Toggle
+    // Mobile Left Sidebar Drawer Toggle
     const mobileMenu = document.getElementById('mobile-menu');
-    const navLinks = document.querySelector('.nav-links');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-    if (mobileMenu) {
-        // Toggle Menu
+    if (mobileMenu && sidebar) {
+        const toggleMobileSidebar = (open) => {
+            const shouldOpen = open !== undefined ? open : !sidebar.classList.contains('active');
+            if (shouldOpen) {
+                sidebar.classList.add('active');
+                mobileMenu.classList.add('active');
+                if (sidebarOverlay) sidebarOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                sidebar.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+
         mobileMenu.addEventListener('click', (e) => {
             e.stopPropagation();
-            navLinks.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
+            toggleMobileSidebar();
         });
 
-        // Close Menu when a Link is Clicked
-        navLinks.querySelectorAll('a').forEach(link => {
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', () => {
+                toggleMobileSidebar(false);
+            });
+        }
+
+        // Close Left Sidebar when a link is clicked
+        sidebar.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                mobileMenu.classList.remove('active');
+                toggleMobileSidebar(false);
             });
         });
 
-        // Close Menu when Clicking Outside
-        document.addEventListener('click', (e) => {
-            if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !mobileMenu.contains(e.target)) {
-                navLinks.classList.remove('active');
-                mobileMenu.classList.remove('active');
+        // Close Left Sidebar on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+                toggleMobileSidebar(false);
             }
         });
     }
