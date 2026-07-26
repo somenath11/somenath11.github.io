@@ -220,6 +220,308 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 5. Render Projects Section
 
+    window.showProjectDetails = function(index) {
+        const listContainer = document.getElementById('projectsListContainer');
+        const detailContainer = document.getElementById('projectDetailContainer');
+        if (!detailContainer || !portfolioData.projects || !portfolioData.projects[index]) return;
+
+        const proj = portfolioData.projects[index];
+        const images = (proj.images && proj.images.length > 0) ? proj.images : (proj.image ? [proj.image] : []);
+        const techPillsHtml = proj.techStack ? proj.techStack.map(t => `<span class="project-detail-tag">${t}</span>`).join('') : '';
+        const techBadgesHtml = proj.techStack ? proj.techStack.map(t => `<span class="modal-tech-badge">${t}</span>`).join('') : '';
+        const approachHtml = proj.approach && proj.approach.length 
+            ? proj.approach.map(step => `<li>${step}</li>`).join('') 
+            : '<li>N/A</li>';
+
+        detailContainer.innerHTML = `
+            <div class="project-detail-view fade-up visible">
+                <div class="project-detail-top-nav">
+                    <a href="#projects" class="back-to-projects-btn" id="backToProjectsBtn">
+                        <i data-lucide="arrow-left"></i> All Projects
+                    </a>
+                </div>
+
+                <div class="project-detail-header">
+                    <h1 class="project-detail-title">${proj.title}</h1>
+                    <p class="project-detail-description">${proj.description}</p>
+                    <div class="project-detail-meta">
+                        <span>By ${portfolioData.name || 'Somenath Sau'}</span>
+                        ${proj.category ? ` • <span>${proj.category}</span>` : ''}
+                    </div>
+                </div>
+
+                <div class="project-detail-content-grid">
+                    <div class="project-detail-main-col">
+                        ${proj.keyInsight ? `
+                        <div class="project-detail-insight-callout">
+                            <h3 class="project-detail-insight-heading"><i data-lucide="lightbulb"></i> Key Insight</h3>
+                            <p>${proj.keyInsight}</p>
+                        </div>` : ''}
+
+                        ${proj.problem ? `
+                        <div class="project-detail-card-section">
+                            <h3 class="project-detail-section-title"><i data-lucide="alert-triangle"></i> The Problem</h3>
+                            <p>${proj.problem}</p>
+                        </div>` : ''}
+
+                        ${proj.dataset ? `
+                        <div class="project-detail-card-section">
+                            <h3 class="project-detail-section-title"><i data-lucide="database"></i> Dataset</h3>
+                            <p>${proj.dataset}</p>
+                        </div>` : ''}
+
+                        ${proj.approach && proj.approach.length ? `
+                        <div class="project-detail-card-section">
+                            <h3 class="project-detail-section-title"><i data-lucide="list-checks"></i> Approach & Methodology</h3>
+                            <ul class="project-detail-list">
+                                ${approachHtml}
+                            </ul>
+                        </div>` : ''}
+
+                        ${proj.businessImpact ? `
+                        <div class="project-detail-card-section">
+                            <h3 class="project-detail-section-title"><i data-lucide="trending-up"></i> Business Impact</h3>
+                            <p>${proj.businessImpact}</p>
+                        </div>` : ''}
+
+                        ${proj.recommendations && proj.recommendations.length ? `
+                        <div class="project-detail-card-section">
+                            <h3 class="project-detail-section-title"><i data-lucide="compass"></i> Strategic Recommendations</h3>
+                            <ul class="project-detail-list">
+                                ${proj.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                            </ul>
+                        </div>` : ''}
+                    </div>
+
+                    <div class="project-detail-sidebar-col">
+                        <div class="project-detail-sidebar-card">
+                            <h3 class="project-detail-sidebar-heading"><i data-lucide="wrench"></i> Tools & Tech Stack</h3>
+                            <div class="project-detail-sidebar-tags">
+                                ${techBadgesHtml}
+                            </div>
+                            <div class="project-detail-actions">
+                                ${proj.codeLink ? `<a href="${proj.codeLink}" class="btn-secondary" target="_blank"><i data-lucide="github"></i> Repository</a>` : ''}
+                                ${proj.demoLink ? `<a href="${proj.demoLink}" class="btn-primary" target="_blank"><i data-lucide="external-link"></i> Live Demo</a>` : ''}
+                            </div>
+                        </div>
+
+                        <div class="project-detail-sidebar-card project-image-card">
+                            <div class="project-preview-header">
+                                <h3 class="project-detail-sidebar-heading"><i data-lucide="image"></i> Project Preview</h3>
+                                ${images.length > 1 ? `<span class="image-counter" id="previewImgCounter">1 / ${images.length}</span>` : ''}
+                            </div>
+                            <div class="project-preview-slider-container">
+                                <div class="project-detail-image-box modal-image-wrapper" id="previewImgWrapper">
+                                    <img id="projectPreviewImg" src="${images[0]}" alt="${proj.title}" loading="lazy">
+                                </div>
+                                ${images.length > 1 ? `
+                                    <button class="slider-btn prev-btn" id="prevImgBtn" aria-label="Previous Image">
+                                        <i data-lucide="chevron-left"></i>
+                                    </button>
+                                    <button class="slider-btn next-btn" id="nextImgBtn" aria-label="Next Image">
+                                        <i data-lucide="chevron-right"></i>
+                                    </button>
+                                    <div class="slider-dots" id="sliderDots">
+                                        ${images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`).join('')}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        if (listContainer) listContainer.style.display = 'none';
+        detailContainer.style.display = 'block';
+
+        const backBtn = detailContainer.querySelector('#backToProjectsBtn');
+        if (backBtn) {
+            backBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showProjectsList();
+                history.pushState(null, null, '#projects');
+            });
+        }
+
+        let currentImgIndex = 0;
+        const mainImg = detailContainer.querySelector('#projectPreviewImg');
+        const imgCounter = detailContainer.querySelector('#previewImgCounter');
+        const prevBtn = detailContainer.querySelector('#prevImgBtn');
+        const nextBtn = detailContainer.querySelector('#nextImgBtn');
+        const dots = detailContainer.querySelectorAll('#sliderDots .dot');
+        const imgWrapper = detailContainer.querySelector('#previewImgWrapper');
+
+        function updatePreviewImage(newIndex) {
+            if (newIndex < 0) newIndex = images.length - 1;
+            if (newIndex >= images.length) newIndex = 0;
+            currentImgIndex = newIndex;
+
+            if (mainImg) {
+                mainImg.style.opacity = '0.3';
+                setTimeout(() => {
+                    mainImg.src = images[currentImgIndex];
+                    mainImg.style.opacity = '1';
+                }, 120);
+            }
+
+            if (imgCounter) {
+                imgCounter.textContent = `${currentImgIndex + 1} / ${images.length}`;
+            }
+
+            dots.forEach((dot, idx) => {
+                if (idx === currentImgIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                updatePreviewImage(currentImgIndex - 1);
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                updatePreviewImage(currentImgIndex + 1);
+            });
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const idx = parseInt(dot.getAttribute('data-index'), 10);
+                updatePreviewImage(idx);
+            });
+        });
+
+        if (imgWrapper) {
+            imgWrapper.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openImageZoomModal(currentImgIndex);
+            });
+        }
+
+        function openImageZoomModal(initialIndex = 0) {
+            const imageZoomModal = document.getElementById('imageZoomModal');
+            const imageZoomTitle = document.getElementById('imageZoomTitle');
+            const imageZoomCounter = document.getElementById('imageZoomCounter');
+            const imageZoomImg = document.getElementById('imageZoomImg');
+            const imageZoomPrevBtn = document.getElementById('imageZoomPrevBtn');
+            const imageZoomNextBtn = document.getElementById('imageZoomNextBtn');
+            const imageZoomDotsContainer = document.getElementById('imageZoomDots');
+            const imageZoomCloseBtn = document.getElementById('imageZoomCloseBtn');
+
+            if (!imageZoomModal || !imageZoomImg) return;
+            
+            let modalIndex = initialIndex;
+
+            function renderModalImage(idx) {
+                if (idx < 0) idx = images.length - 1;
+                if (idx >= images.length) idx = 0;
+                modalIndex = idx;
+
+                imageZoomImg.style.opacity = '0.3';
+                setTimeout(() => {
+                    imageZoomImg.src = images[modalIndex];
+                    imageZoomImg.style.opacity = '1';
+                }, 100);
+
+                if (imageZoomTitle) imageZoomTitle.textContent = proj.title || 'Project Preview';
+                if (imageZoomCounter) {
+                    imageZoomCounter.textContent = images.length > 1 ? `${modalIndex + 1} / ${images.length}` : '';
+                    imageZoomCounter.style.display = images.length > 1 ? 'inline-block' : 'none';
+                }
+
+                if (imageZoomPrevBtn) imageZoomPrevBtn.style.display = images.length > 1 ? 'flex' : 'none';
+                if (imageZoomNextBtn) imageZoomNextBtn.style.display = images.length > 1 ? 'flex' : 'none';
+
+                if (imageZoomDotsContainer) {
+                    if (images.length > 1) {
+                        imageZoomDotsContainer.innerHTML = images.map((_, i) => `<span class="dot ${i === modalIndex ? 'active' : ''}" data-index="${i}"></span>`).join('');
+                        imageZoomDotsContainer.querySelectorAll('.dot').forEach(dot => {
+                            dot.addEventListener('click', (ev) => {
+                                ev.stopPropagation();
+                                const i = parseInt(dot.getAttribute('data-index'), 10);
+                                renderModalImage(i);
+                                updatePreviewImage(i);
+                            });
+                        });
+                    } else {
+                        imageZoomDotsContainer.innerHTML = '';
+                    }
+                }
+            }
+
+            renderModalImage(modalIndex);
+            imageZoomModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            const onPrevClick = (ev) => {
+                ev.stopPropagation();
+                renderModalImage(modalIndex - 1);
+                updatePreviewImage(modalIndex);
+            };
+
+            const onNextClick = (ev) => {
+                ev.stopPropagation();
+                renderModalImage(modalIndex + 1);
+                updatePreviewImage(modalIndex);
+            };
+
+            const onCloseClick = (ev) => {
+                if (ev) ev.stopPropagation();
+                closeImageZoomModal();
+            };
+
+            const onKeyDown = (ev) => {
+                if (!imageZoomModal.classList.contains('active')) return;
+                if (ev.key === 'ArrowLeft') {
+                    renderModalImage(modalIndex - 1);
+                    updatePreviewImage(modalIndex);
+                } else if (ev.key === 'ArrowRight') {
+                    renderModalImage(modalIndex + 1);
+                    updatePreviewImage(modalIndex);
+                } else if (ev.key === 'Escape') {
+                    closeImageZoomModal();
+                }
+            };
+
+            if (imageZoomPrevBtn) imageZoomPrevBtn.onclick = onPrevClick;
+            if (imageZoomNextBtn) imageZoomNextBtn.onclick = onNextClick;
+            if (imageZoomCloseBtn) imageZoomCloseBtn.onclick = onCloseClick;
+
+            imageZoomModal.onclick = (ev) => {
+                if (ev.target === imageZoomModal) {
+                    closeImageZoomModal();
+                }
+            };
+
+            document.addEventListener('keydown', onKeyDown);
+
+            function closeImageZoomModal() {
+                imageZoomModal.classList.remove('active');
+                document.body.style.overflow = '';
+                document.removeEventListener('keydown', onKeyDown);
+            }
+        }
+
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    };
+
+    window.showProjectsList = function() {
+        const listContainer = document.getElementById('projectsListContainer');
+        const detailContainer = document.getElementById('projectDetailContainer');
+        if (detailContainer) detailContainer.style.display = 'none';
+        if (listContainer) listContainer.style.display = 'block';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    };
+
     const projectsGrid = document.getElementById('projectsGrid');
     if (projectsGrid) {
         projectsGrid.className = 'projects-grid-2col';
@@ -247,7 +549,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${insightHtml}
                     <div class="tech-stack-v2">${techPillsHtml}</div>
                     <div class="project-card-actions">
-                        <button class="btn-primary open-modal-btn" data-index="${index}">View Details</button>
+                        <button class="btn-primary open-project-btn" data-index="${index}">View Details</button>
                         <a href="${project.codeLink}" class="btn-secondary" target="_blank"><i data-lucide="github"></i> Repository</a>
                     </div>
                 </div>
@@ -255,102 +557,46 @@ document.addEventListener('DOMContentLoaded', () => {
             projectsGrid.appendChild(card);
         });
 
-        // Modal Logic
-        // Project Modal Logic
-        const modal = document.getElementById('projectModal');
-        const closeBtn = document.getElementById('modalCloseBtn');
-        
-        // Resume Modal Logic
-        const resumeModal = document.getElementById('resumeModal');
-        const resumeCloseBtn = document.getElementById('resumeModalCloseBtn');
-        const resumeIframe = document.getElementById('resumeIframe');
-
-        // Open Resume Modal
-        document.querySelectorAll('.open-resume-modal').forEach(btn => {
-            btn.addEventListener('click', () => {
-                if (resumeModal && resumeIframe) {
-                    resumeIframe.src = portfolioData.resumeLink;
-                    resumeModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }
+        document.querySelectorAll('.open-project-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idx = e.currentTarget.getAttribute('data-index');
+                history.pushState(null, null, `#project-${idx}`);
+                setActiveSection(`#project-${idx}`);
             });
         });
+    }
 
-        // Close Resume Modal
-        if (resumeCloseBtn && resumeModal) {
-            resumeCloseBtn.addEventListener('click', () => {
+    // Resume Modal Logic
+    const resumeModal = document.getElementById('resumeModal');
+    const resumeCloseBtn = document.getElementById('resumeModalCloseBtn');
+    const resumeIframe = document.getElementById('resumeIframe');
+
+    // Open Resume Modal
+    document.querySelectorAll('.open-resume-modal').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (resumeModal && resumeIframe) {
+                resumeIframe.src = portfolioData.resumeLink;
+                resumeModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    // Close Resume Modal
+    if (resumeCloseBtn && resumeModal) {
+        resumeCloseBtn.addEventListener('click', () => {
+            resumeModal.classList.remove('active');
+            resumeIframe.src = ''; 
+            document.body.style.overflow = '';
+        });
+
+        resumeModal.addEventListener('click', (e) => {
+            if (e.target === resumeModal) {
                 resumeModal.classList.remove('active');
-                resumeIframe.src = ''; // Clear src to stop any loading
+                resumeIframe.src = '';
                 document.body.style.overflow = '';
-            });
-
-            resumeModal.addEventListener('click', (e) => {
-                if (e.target === resumeModal) {
-                    resumeModal.classList.remove('active');
-                    resumeIframe.src = '';
-                    document.body.style.overflow = '';
-                }
-            });
-        }
-
-        if (modal && closeBtn) {
-            // Open Modal
-            document.querySelectorAll('.open-modal-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const idx = e.currentTarget.getAttribute('data-index');
-                    const proj = portfolioData.projects[idx];
-                    
-                    document.getElementById('modalTitle').textContent = proj.title;
-                    document.getElementById('modalImage').src = proj.image;
-                    
-                    document.getElementById('modalProblem').textContent = proj.problem || 'N/A';
-                    document.getElementById('modalDataset').textContent = proj.dataset || 'N/A';
-                    document.getElementById('modalImpact').textContent = proj.businessImpact || 'N/A';
-                    
-                    const insightEl = document.getElementById('modalKeyInsight');
-                    insightEl.textContent = proj.keyInsight || 'N/A';
-                    
-                    const approachList = document.getElementById('modalApproach');
-                    approachList.innerHTML = proj.approach 
-                        ? proj.approach.map(step => `<li>${step}</li>`).join('')
-                        : '<li>N/A</li>';
-                        
-                    const toolsContainer = document.getElementById('modalTools');
-                    toolsContainer.innerHTML = proj.techStack.map(t => `<span class="modal-tech-badge">${t}</span>`).join('');
-                    
-                    document.getElementById('modalCodeLink').href = proj.codeLink;
-                    document.getElementById('modalDemoLink').href = proj.demoLink;
-                    
-                    modal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    lucide.createIcons();
-                });
-            });
-
-            // Image Expansion Toggle
-            document.querySelectorAll('.modal-image-wrapper').forEach(wrapper => {
-                wrapper.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    wrapper.classList.toggle('expanded');
-                });
-            });
-            
-            // Close Modal Function
-            const closeModal = () => {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-                // Reset image expanded states
-                document.querySelectorAll('.modal-image-wrapper').forEach(w => w.classList.remove('expanded'));
-            };
-            
-            closeBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
-            });
-        }
+            }
+        });
     }
 
     // 6. Render Skills Section (Redesigned with Hierarchy)
@@ -598,7 +844,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- SINGLE PAGE APPLICATION (SPA) SECTION ROUTING ---
     function setActiveSection(targetHash) {
-        const rawId = (targetHash || '#home').replace('#', '');
+        const hash = targetHash || '#home';
+        let rawId = hash.replace('#', '');
+        
+        let isProjectDetail = false;
+        let projectIndex = null;
+
+        if (rawId.startsWith('project-')) {
+            const idxStr = rawId.replace('project-', '');
+            const parsedIdx = parseInt(idxStr, 10);
+            if (!isNaN(parsedIdx) && portfolioData.projects && portfolioData.projects[parsedIdx]) {
+                isProjectDetail = true;
+                projectIndex = parsedIdx;
+                rawId = 'projects';
+            }
+        }
+
         const validSections = ['home', 'about', 'projects', 'skills', 'experience', 'education', 'certifications', 'contact'];
         
         let activeId = validSections.includes(rawId) ? rawId : 'home';
@@ -618,6 +879,18 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const targetSec = document.getElementById(activeId);
             if (targetSec) targetSec.classList.add('active-section');
+        }
+
+        if (activeId === 'projects') {
+            if (isProjectDetail && projectIndex !== null) {
+                if (typeof window.showProjectDetails === 'function') {
+                    window.showProjectDetails(projectIndex);
+                }
+            } else {
+                if (typeof window.showProjectsList === 'function') {
+                    window.showProjectsList();
+                }
+            }
         }
 
         // Trigger animations for .fade-up inside active sections

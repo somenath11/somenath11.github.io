@@ -172,9 +172,14 @@
     <!-- Projects Section -->
     <section id="projects" class="section">
         <div class="container">
-            <h2 class="section-title fade-up">Projects</h2>
-            <div class="projects-grid" id="projectsGrid">
-                <!-- Dynamic Content -->
+            <div id="projectsListContainer">
+                <h2 class="section-title fade-up">Projects</h2>
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+            <div id="projectDetailContainer" class="project-detail-wrapper" style="display: none;">
+                <!-- Dynamic Content for in-page project details -->
             </div>
         </div>
     </section>
@@ -337,57 +342,34 @@
         </div>
     </div>
 
-    <!-- Project Modal -->
-    <div id="projectModal" class="modal-overlay">
-        <div class="modal-container">
+    <!-- Image Zoom Modal Popup -->
+    <div id="imageZoomModal" class="modal-overlay image-zoom-overlay">
+        <div class="modal-container image-zoom-container">
             <div class="modal-header">
-                <h2 id="modalTitle" class="modal-title">Project Title</h2>
-                <button id="modalCloseBtn" class="modal-close-btn"><i data-lucide="x"></i></button>
+                <div class="image-modal-title-wrap">
+                    <h3 class="modal-title" id="imageZoomTitle">Project Preview</h3>
+                    <span class="image-counter" id="imageZoomCounter">1 / 1</span>
+                </div>
+                <button id="imageZoomCloseBtn" class="modal-close-btn" aria-label="Close Preview"><i data-lucide="x"></i></button>
             </div>
-            <div class="modal-content">
-                
-                <div class="modal-section">
-                    <h3 class="modal-section-title">The Problem</h3>
-                    <p id="modalProblem"></p>
+            <div class="image-zoom-body">
+                <button class="slider-btn prev-btn modal-slider-btn" id="imageZoomPrevBtn" aria-label="Previous Image">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <div class="image-zoom-view">
+                    <img id="imageZoomImg" src="" alt="Project Full Preview">
                 </div>
-
-                <div class="modal-section">
-                    <h3 class="modal-section-title">Dataset</h3>
-                    <p id="modalDataset"></p>
-                </div>
-
-                <div class="modal-section">
-                    <h3 class="modal-section-title">Approach & Methodology</h3>
-                    <ul id="modalApproach" class="modal-list"></ul>
-                </div>
-
-                <div class="modal-insight-box">
-                    <h3 class="modal-insight-title"><i data-lucide="lightbulb"></i> Key Insight</h3>
-                    <p id="modalKeyInsight"></p>
-                </div>
-
-                <div class="modal-section">
-                    <h3 class="modal-section-title">Business Impact</h3>
-                    <p id="modalImpact"></p>
-                </div>
-
-                <div class="modal-images-grid">
-                    <div class="modal-image-wrapper">
-                        <img id="modalImage" src="" alt="Project Image">
-                    </div>
-                </div>
-
-                <div class="modal-section">
-                    <h3 class="modal-section-title">Tools & Tech Stack</h3>
-                    <div id="modalTools" class="modal-tech-stack"></div>
-                </div>
+                <button class="slider-btn next-btn modal-slider-btn" id="imageZoomNextBtn" aria-label="Next Image">
+                    <i data-lucide="chevron-right"></i>
+                </button>
             </div>
-            <div class="modal-footer">
-                <a href="javascript:void(0)" id="modalCodeLink" class="btn-secondary" target="_blank"><i data-lucide="github"></i> Repository</a>
-                <a href="javascript:void(0)" id="modalDemoLink" class="btn-primary" target="_blank"><i data-lucide="external-link"></i> Live</a>
+            <div class="image-zoom-footer">
+                <div class="slider-dots" id="imageZoomDots"></div>
             </div>
         </div>
     </div>
+
+
 
     <script src="resources/data.js?v=20.0"></script>
     <script src="resources/script.js?v=20.0"></script>

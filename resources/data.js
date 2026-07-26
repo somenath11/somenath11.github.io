@@ -159,9 +159,18 @@ const portfolioData = {
                         "Performed business analysis to identify top-performing product categories"
                     ],
             businessImpact: "Delivered an executive-level dashboard that replaces manual spreadsheet analysis with interactive reporting, enabling stakeholders to monitor KPIs, identify revenue opportunities, optimize inventory planning, and support data-driven business decisions.",
+            recommendations: [
+                "Prioritize inventory allocation for high-revenue categories (e.g., Clothing) in top-performing locations like Del Amo Mall and LA.",
+                "Implement targeted promotional campaigns and customer loyalty incentives during low-volume sales months.",
+                "Automate data refresh pipelines to provide management with real-time alerts on sales anomalies and stock depletion."
+            ],
             techStack: ["DAX", "Data Visualization", "Excel Data Model", "Microsoft Excel",  "Power Pivot"],
             category: "Business Intelligence",
             image: "resources/assets/images/CMCS2123.png",
+            images: [
+                "resources/assets/images/CMCS2123.png",
+                "resources/assets/images/Mall.png"
+            ],
             codeLink: "https://github.com/somenathsau/Excel-Projects/tree/main/P1-California_Retail_Sales_Analysis",
             demoLink: "https://1drv.ms/x/c/451F38CD7B3963F9/IQBFGRKfvbVGSYZa-Vi-SkxdAR-LuJ0s4AhJxUmpy9Gvl6M?e=rWvpfF"
         },
@@ -178,9 +187,17 @@ const portfolioData = {
                 "Analyzed cancellation rates and reasons during peak traffic hours."
             ],
             businessImpact: "Identified key surge periods, allowing for optimized driver allocation which could potentially reduce wait times by 15% and increase daily revenue.",
+            recommendations: [
+                "Deploy dynamic driver incentives during peak evening hours (6–9 PM) to align vehicle supply with demand spikes.",
+                "Implement anti-cancellation measures and driver bonuses in high-friction pickup zones to improve trip completion rates.",
+                "Integrate predictive machine learning models to forecast hourly demand and optimize shift routing for drivers."
+            ],
             techStack: ["Python", "Numpy", "Pandas", "Matplotlib", "Seaborn"],
             category: "Data Analysis",
             image: "resources/assets/images/Uber_Project.webp",
+            images: [
+                "resources/assets/images/Uber_Project.webp"
+            ],
             codeLink: "https://github.com/somenathsau/CodeClause-data-science-internship/tree/main/Project%202%20-%20Uber%20Data%20Analysis",
             demoLink: "https://github.com/somenathsau/CodeClause-data-science-internship/blob/main/Project%202%20-%20Uber%20Data%20Analysis/Uber%20data%20analysis.ipynb"
         },
@@ -197,9 +214,17 @@ const portfolioData = {
                 "Segmented data by demographic impact to understand vulnerable populations."
             ],
             businessImpact: "Provided a data-driven foundation for predictive policing strategies, enabling more targeted patrol deployments in high-risk zones.",
+            recommendations: [
+                "Increase patrol frequency and smart surveillance infrastructure in urban centers where property crimes exceed 40% of incidents.",
+                "Establish unified inter-state crime data reporting protocols to track cross-border criminal patterns in real-time.",
+                "Deploy automated public alert systems and community awareness programs in identified high-risk zones."
+            ],
             techStack: ["Python", "Matplotlib", "Scikit-learn", "Pandas"],
             category: "Data Analysis",
             image: "resources/assets/images/crime_correlation_heatmap.webp",
+            images: [
+                "resources/assets/images/crime_correlation_heatmap.webp"
+            ],
             codeLink: "https://github.com/somenathsau/Crime_Report_in_India_2013",
             demoLink: "https://github.com/somenathsau/Crime_Report_in_India_2013/blob/main/Crime_Report_Analysis_2013.ipynb"
         },
