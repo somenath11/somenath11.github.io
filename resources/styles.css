@@ -413,14 +413,55 @@ section:nth-of-type(even) {
 
 .hero-buttons-container {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     align-items: center;
+    margin-top: 20px;
 }
 
 .hero-btn-projects,
 .hero-btn-resume {
-    width: fit-content;
-    border-radius: 50px;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 12px 28px !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    border-radius: 50px !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    transition: all 0.3s ease !important;
+    min-width: 140px !important;
+    text-align: center !important;
+}
+
+.hero-btn-projects {
+    background: var(--accent-blue) !important;
+    color: var(--btn-text-color) !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.3) !important;
+}
+
+.hero-btn-projects:hover {
+    background: var(--accent-blue-hover) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.4) !important;
+    color: var(--btn-text-color) !important;
+    text-decoration: none !important;
+}
+
+.hero-btn-resume {
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    border: 2px solid var(--glass-border) !important;
+}
+
+.hero-btn-resume:hover {
+    background: var(--soft-blue) !important;
+    border-color: var(--accent-blue) !important;
+    transform: translateY(-3px) !important;
+    color: var(--text-primary) !important;
+    text-decoration: none !important;
 }
 
 /* Greeting */
@@ -1471,7 +1512,7 @@ section:nth-of-type(even) {
     height: 100%;
     box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
     transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    padding: 10px;
+    padding: 8px;
 }
 
 .project-card-v2:hover {
@@ -1597,13 +1638,14 @@ section:nth-of-type(even) {
 
 .project-card-actions .btn-primary,
 .project-card-actions .btn-secondary {
-    padding: 4px 14px !important;
+    padding: 6px 14px !important;
     font-size: 13px !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 6px !important;
+    border-radius: 8px !important;
 }
 
 .project-card-actions .btn-primary i,
@@ -3720,26 +3762,52 @@ section:nth-of-type(even) {
     transform: translateY(-3px) !important;
 }
 
+/* Guarantee No Underline on Any Buttons or Resume Links */
+.btn-primary,
+.btn-primary *,
+a.btn-primary,
+button.btn-primary,
+.btn-secondary,
+.btn-secondary *,
+a.btn-secondary,
+.sidebar-resume-btn,
+.sidebar-resume-btn *,
+.hero-btn-resume,
+.hero-btn-projects,
+.resume-btn,
+#downloadResumeBtn {
+    text-decoration: none !important;
+}
+/* Base Button Styling (View Resume, Submit, etc.) */
+.btn-primary,
+.btn-secondary {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 12px 28px !important;
+    border-radius: 30px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-sizing: border-box !important;
+    line-height: 1.4 !important;
+}
+
 .btn-primary,
 .btn-primary *,
 a.btn-primary,
 button.btn-primary {
     color: var(--btn-text-color) !important;
-    /* High Contrast Dark Text for Amber/Yellow Background */
     font-weight: 700 !important;
-    box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.3);
 }
 
 .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: var(--accent-blue);
-    color: var(--btn-text-color) !important;
-    font-weight: 600;
-    border: none;
-    box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.3);
+    background: var(--accent-blue) !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.3) !important;
 }
 
 .btn-primary i,
@@ -3755,9 +3823,9 @@ button.btn-primary {
 .btn-primary:hover,
 a.btn-primary:hover,
 button.btn-primary:hover {
-    transform: translateY(-3px);
-    background: var(--accent-blue-hover);
-    box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.4);
+    transform: translateY(-3px) !important;
+    background: var(--accent-blue-hover) !important;
+    box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.4) !important;
     color: var(--btn-text-color) !important;
 }
 
@@ -3766,6 +3834,19 @@ button.btn-primary:hover {
 .btn-primary:hover i *,
 .btn-primary:hover svg * {
     transform: none !important;
+}
+
+.btn-secondary {
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    border: 2px solid var(--glass-border) !important;
+}
+
+.btn-secondary:hover {
+    background: var(--soft-blue) !important;
+    border-color: var(--accent-blue) !important;
+    transform: translateY(-3px) !important;
+    color: var(--text-primary) !important;
 }
 
 .theme-toggle-btn:hover {
