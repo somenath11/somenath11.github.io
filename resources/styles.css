@@ -2825,9 +2825,9 @@ section:nth-of-type(even) {
 /* Responsive */
 @media (max-width: 768px) {
     .hero-section {
-        padding-bottom: 80px;
-        padding-top: 60px;
-        /* Aggressively reduced */
+        padding-bottom: 40px !important;
+        padding-top: 25px !important;
+        min-height: auto !important;
     }
 
     .scroll-arrows {
@@ -2862,7 +2862,7 @@ section:nth-of-type(even) {
         align-items: center;
         text-align: center;
         gap: 0;
-        padding-top: 30px;
+        padding-top: 15px !important;
     }
 
     .hero-text {
@@ -4350,6 +4350,20 @@ button.btn-primary:hover {
         margin-left: 0 !important;
         width: 100% !important;
         padding-top: 60px;
+    }
+
+    /* Mobile Section Vertical Padding Overrides */
+    .section,
+    #skills.section,
+    #projects.section,
+    #experience.section,
+    #education.section,
+    #certifications.section,
+    #about.section,
+    #contact.section {
+        padding-top: 35px !important;
+        padding-bottom: 50px !important;
+        min-height: auto !important;
     }
 
     /* Mobile Global Container & Section Layout Centering */
