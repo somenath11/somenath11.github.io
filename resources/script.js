@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                             <div class="project-detail-actions">
                                 ${proj.codeLink ? `<a href="${proj.codeLink}" class="btn-secondary" target="_blank"><i data-lucide="github"></i> Repository</a>` : ''}
-                                ${proj.demoLink ? `<a href="${proj.demoLink}" class="btn-primary" target="_blank"><i data-lucide="external-link"></i> Live Demo</a>` : ''}
+                                ${proj.demoLink ? `<a href="${proj.demoLink}" class="btn-primary" target="_blank"><i data-lucide="external-link"></i> Preview</a>` : ''}
                             </div>
                         </div>
 
@@ -541,8 +541,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             card.innerHTML = `
                 <div class="project-card-image">
-                    <div class="project-image-wrapper">
+                    <div class="project-image-wrapper open-project-btn" data-index="${index}">
                         <img src="${project.image}" alt="${project.title}" loading="lazy">
+                        <div class="project-image-overlay">
+                            <span class="project-image-badge"><i data-lucide="eye"></i> View Details</span>
+                        </div>
                     </div>
                 </div>
                 <div class="project-card-content">
