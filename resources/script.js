@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
             backBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 showProjectsList();
-                history.pushState(null, null, '#projects');
+                updateCleanUrl('projects', true);
             });
         }
 
@@ -564,8 +564,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.open-project-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const idx = e.currentTarget.getAttribute('data-index');
-                history.pushState(null, null, `#project-${idx}`);
-                setActiveSection(`#project-${idx}`);
+                updateCleanUrl(`project-${idx}`, true);
+                setActiveSection(`project-${idx}`, false);
             });
         });
     }
@@ -864,13 +864,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- SINGLE PAGE APPLICATION (SPA) SECTION ROUTING ---
-    function setActiveSection(targetHash) {
-        const hash = targetHash || '#home';
-        let rawId = hash.replace('#', '');
+    // --- SINGLE PAGE APPLICATION (SPA) CLEAN URL ROUTING ---
+    function getCurrentRoute() {
+        let path = window.location.pathname;
+        let segments = path.split('/').filter(Boolean);
+        let lastSegment = segments.length > 0 ? segments[segments.length - 1] : '';
+        
+        if (lastSegment === 'index.html') {
+            lastSegment = segments.length > 1 ? segments[segments.length - 2] : '';
+        }
+        
+        if (lastSegment && lastSegment !== 'index.html') {
+            return lastSegment;
+        }
+
+        if (window.location.hash) {
+            return window.location.hash.replace('#', '');
+        }
+
+        return 'home';
+    }
+
+    function updateCleanUrl(route, isPush = true) {
+        let cleanRoute = (route || 'home').replace('#', '').trim();
+        let targetPath = '';
+
+        if (cleanRoute === 'home' || cleanRoute === 'about' || cleanRoute === '' || cleanRoute === 'index.html') {
+            targetPath = '/';
+        } else {
+            targetPath = '/' + cleanRoute;
+        }
+
+        if (window.location.pathname !== targetPath && (window.location.pathname + window.location.hash) !== targetPath) {
+            if (isPush) {
+                history.pushState(null, null, targetPath);
+            } else {
+                history.replaceState(null, null, targetPath);
+            }
+        }
+    }
+    window.updateCleanUrl = updateCleanUrl;
+
+    function setActiveSection(targetRoute, shouldUpdateUrl = true) {
+        let rawId = (targetRoute || getCurrentRoute()).replace('#', '');
         
         let isProjectDetail = false;
         let projectIndex = null;
+        let routeForUrl = rawId;
 
         if (rawId.startsWith('project-')) {
             const idxStr = rawId.replace('project-', '');
@@ -879,12 +919,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 isProjectDetail = true;
                 projectIndex = parsedIdx;
                 rawId = 'projects';
+                routeForUrl = `project-${parsedIdx}`;
             }
         }
 
         const validSections = ['home', 'about', 'projects', 'skills', 'experience', 'education', 'certifications', 'contact'];
         
         let activeId = validSections.includes(rawId) ? rawId : 'home';
+
+        if (!validSections.includes(rawId) && !isProjectDetail) {
+            routeForUrl = 'home';
+        }
 
         // Hide all sections
         document.querySelectorAll('.hero-section, .section').forEach(sec => {
@@ -898,6 +943,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (homeSec) homeSec.classList.add('active-section');
             if (aboutSec) aboutSec.classList.add('active-section');
             activeId = 'home';
+            routeForUrl = 'home';
         } else {
             const targetSec = document.getElementById(activeId);
             if (targetSec) targetSec.classList.add('active-section');
@@ -933,6 +979,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        if (shouldUpdateUrl) {
+            updateCleanUrl(routeForUrl, false);
+        }
+
         // Scroll to top of main content area
         window.scrollTo({ top: 0, behavior: 'instant' });
         if (typeof lucide !== 'undefined') lucide.createIcons();
@@ -944,19 +994,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const href = this.getAttribute('href');
             if (href && href !== '#') {
                 e.preventDefault();
-                setActiveSection(href);
-                history.pushState(null, null, href);
+                const route = href.replace('#', '');
+                setActiveSection(route, false);
+                updateCleanUrl(route, true);
             }
         });
     });
 
     // Handle browser navigation (back/forward)
     window.addEventListener('popstate', () => {
-        setActiveSection(window.location.hash);
+        setActiveSection(getCurrentRoute(), false);
     });
 
     // Initialize SPA section on page load
-    setActiveSection(window.location.hash || '#home');
+    const initialRoute = getCurrentRoute();
+    setActiveSection(initialRoute, true);
 
     // --- THEME TOGGLE LOGIC ---
     const themeToggleBtns = document.querySelectorAll('.theme-toggle-btn');

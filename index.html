@@ -21,6 +21,23 @@
         // Inline theme initialization to prevent flash
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // SPA Redirect Restore Handler for GitHub Pages Clean URLs
+        (function() {
+            var redirect = sessionStorage.redirect;
+            delete sessionStorage.redirect;
+            if (redirect && redirect !== location.href) {
+                var url = new URL(redirect);
+                var path = url.pathname;
+                var segments = path.split('/').filter(Boolean);
+                var lastSegment = segments.length > 0 ? segments[segments.length - 1] : '';
+                if (lastSegment && lastSegment !== 'index.html') {
+                    history.replaceState(null, null, '/' + lastSegment + url.hash);
+                } else if (url.hash) {
+                    history.replaceState(null, null, '/' + url.hash.replace('#', ''));
+                }
+            }
+        })();
     </script>
 </head>
 
