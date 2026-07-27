@@ -53,7 +53,7 @@ const portfolioData = {
     education: [
         {
             badge: "KIIT",
-            institution: "Kalinga Institute of Industrial technology",
+            institution: "Kalinga Institute of Industrial Technology",
             years: "2022–2024",
             degree: "Master of Computer Applications",
             location: "BBSR, Odisha",
@@ -261,7 +261,8 @@ const portfolioData = {
                 { name: "📊 Power BI" },
                 { name: "🐼 Pandas" },
                 { name: "🐍 Python" },
-                { name: "📉 Matplotlib" }
+                { name: "📉 Matplotlib" },
+                { name: "💹 Data Visualization" },
             ]
         },
         {
