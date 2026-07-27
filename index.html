@@ -27,14 +27,18 @@
             var redirect = sessionStorage.redirect;
             delete sessionStorage.redirect;
             if (redirect && redirect !== location.href) {
-                var url = new URL(redirect);
-                var path = url.pathname;
-                var segments = path.split('/').filter(Boolean);
-                var lastSegment = segments.length > 0 ? segments[segments.length - 1] : '';
-                if (lastSegment && lastSegment !== 'index.html') {
-                    history.replaceState(null, null, '/' + lastSegment + url.hash);
-                } else if (url.hash) {
-                    history.replaceState(null, null, '/' + url.hash.replace('#', ''));
+                try {
+                    var url = new URL(redirect);
+                    var path = url.pathname;
+                    var segments = path.split('/').filter(Boolean);
+                    var lastSegment = segments.length > 0 ? segments[segments.length - 1] : '';
+                    if (lastSegment && lastSegment !== 'index.html') {
+                        history.replaceState(null, null, '/' + lastSegment + url.hash);
+                    } else if (url.hash) {
+                        history.replaceState(null, null, '/' + url.hash.replace('#', ''));
+                    }
+                } catch (e) {
+                    console.warn('Could not restore redirect history:', e);
                 }
             }
         })();

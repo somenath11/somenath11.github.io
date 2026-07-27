@@ -564,8 +564,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.open-project-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const idx = e.currentTarget.getAttribute('data-index');
-                updateCleanUrl(`project-${idx}`, true);
                 setActiveSection(`project-${idx}`, false);
+                updateCleanUrl(`project-${idx}`, true);
             });
         });
     }
@@ -866,6 +866,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- SINGLE PAGE APPLICATION (SPA) CLEAN URL ROUTING ---
     function getCurrentRoute() {
+        if (window.location.hash) {
+            return window.location.hash.replace('#', '');
+        }
+
+        if (window.location.protocol === 'file:') {
+            return 'home';
+        }
+
         let path = window.location.pathname;
         let segments = path.split('/').filter(Boolean);
         let lastSegment = segments.length > 0 ? segments[segments.length - 1] : '';
@@ -874,12 +882,9 @@ document.addEventListener('DOMContentLoaded', () => {
             lastSegment = segments.length > 1 ? segments[segments.length - 2] : '';
         }
         
-        if (lastSegment && lastSegment !== 'index.html') {
+        const validSections = ['home', 'about', 'projects', 'skills', 'experience', 'education', 'certifications', 'contact'];
+        if (lastSegment && (validSections.includes(lastSegment) || lastSegment.startsWith('project-'))) {
             return lastSegment;
-        }
-
-        if (window.location.hash) {
-            return window.location.hash.replace('#', '');
         }
 
         return 'home';
@@ -887,8 +892,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateCleanUrl(route, isPush = true) {
         let cleanRoute = (route || 'home').replace('#', '').trim();
-        let targetPath = '';
 
+        if (window.location.protocol === 'file:') {
+            try {
+                if (cleanRoute !== 'home') {
+                    window.location.hash = cleanRoute;
+                } else if (window.location.hash) {
+                    history.replaceState(null, null, window.location.pathname + window.location.search);
+                }
+            } catch (e) {
+                console.warn('Could not update local url hash:', e);
+            }
+            return;
+        }
+
+        let targetPath = '';
         if (cleanRoute === 'home' || cleanRoute === 'about' || cleanRoute === '' || cleanRoute === 'index.html') {
             targetPath = '/';
         } else {
@@ -896,10 +914,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (window.location.pathname !== targetPath && (window.location.pathname + window.location.hash) !== targetPath) {
-            if (isPush) {
-                history.pushState(null, null, targetPath);
-            } else {
-                history.replaceState(null, null, targetPath);
+            try {
+                if (isPush) {
+                    history.pushState(null, null, targetPath);
+                } else {
+                    history.replaceState(null, null, targetPath);
+                }
+            } catch (e) {
+                console.warn('Could not update history state:', e);
+                try {
+                    window.location.hash = cleanRoute;
+                } catch (err) {}
             }
         }
     }
