@@ -1,13 +1,13 @@
 :root {
-    /* Light Theme (Original) */
+    /* Light Theme (Minimal Nordic Teal) */
     --bg-primary: #FFFFFF;
     --bg-secondary: #F8FAFC;
     --text-primary: #0F172A;
     --text-secondary: #475569;
-    --accent-blue: #F59E0B;
-    --accent-blue-hover: #D97706;
-    --accent-secondary: #F59E0B;
-    --accent-secondary-hover: #D97706;
+    --accent-blue: #0D9488;
+    --accent-blue-hover: #0F766E;
+    --accent-secondary: #14B8A6;
+    --accent-secondary-hover: #0D9488;
     --soft-blue: #F1F5F9;
     --glass-bg: rgba(255, 255, 255, 0.9);
     --glass-border: #E2E8F0;
@@ -19,64 +19,64 @@
     --social-pill-border: rgba(0, 0, 0, 0.08);
     --social-github-hover-border: #24292e;
     --social-github-hover-bg: rgba(36, 41, 46, 0.1);
-    --exp-header-bg: #FFFBF2;
-    --exp-header-border: rgba(var(--accent-rgb), 0.2);
+    --exp-header-bg: #F0FDFA;
+    --exp-header-border: rgba(13, 148, 136, 0.2);
     --exp-badge-bg: #FFFFFF;
     --exp-badge-border: var(--accent-blue-hover);
     --exp-badge-text: var(--accent-blue-hover);
-    --edu-cta-bg: rgba(var(--accent-rgb), 0.06);
-    --edu-cta-text: #B45309;
-    --edu-cta-border: rgba(var(--accent-rgb), 0.15);
-    --edu-cta-hover-bg: rgba(var(--accent-rgb), 0.12);
-    --edu-cta-hover-text: #92400E;
-    --edu-cta-fallback-bg: #FDF2F2;
+    --edu-cta-bg: rgba(13, 148, 136, 0.06);
+    --edu-cta-text: #0F766E;
+    --edu-cta-border: rgba(13, 148, 136, 0.15);
+    --edu-cta-hover-bg: rgba(13, 148, 136, 0.12);
+    --edu-cta-hover-text: #115E59;
+    --edu-cta-fallback-bg: #F0FDFA;
 
     --btn-text-color: #FFFFFF; /* Light Mode Button Text */
     --font-primary: 'Inter', sans-serif;
     --font-heading: 'Poppins', sans-serif;
     --font-code: 'JetBrains Mono', monospace;
     
-    /* RGB channels for filters/shadows (Amber) */
-    --accent-rgb: 245, 158, 11;
+    /* RGB channels for filters/shadows (Teal 600) */
+    --accent-rgb: 13, 148, 136;
 }
 
 [data-theme="dark"] {
-    /* Dark Theme (Midnight Obsidian & Vibrant Warm Amber/Orange) */
-    --bg-primary: #0B0F19;
+    /* Dark Theme (Midnight Charcoal & Cyber Mint/Teal) */
+    --bg-primary: #0B0F17;
     --bg-secondary: #111827;
     --text-primary: #F8FAFC;
     --text-secondary: #94A3B8;
-    --accent-blue: #FBBF24;
-    --accent-blue-hover: #F59E0B;
-    --accent-secondary: #FBBF24;
-    --accent-secondary-hover: #F59E0B;
+    --accent-blue: #2DD4BF;
+    --accent-blue-hover: #14B8A6;
+    --accent-secondary: #2DD4BF;
+    --accent-secondary-hover: #14B8A6;
     --soft-blue: #1E293B;
     --glass-bg: rgba(15, 23, 42, 0.85);
     --glass-border: rgba(255, 255, 255, 0.08);
     --card-bg: #1E293B;
-    --navbar-bg: rgba(11, 15, 25, 0.9);
-    --navbar-bg-scrolled: rgba(11, 15, 25, 0.98);
+    --navbar-bg: rgba(11, 15, 23, 0.9);
+    --navbar-bg-scrolled: rgba(11, 15, 23, 0.98);
     --navbar-border: rgba(255, 255, 255, 0.08);
     --social-pill-bg: rgba(255, 255, 255, 0.05);
     --social-pill-border: rgba(255, 255, 255, 0.08);
     --social-github-hover-border: #ffffff;
     --social-github-hover-bg: rgba(255, 255, 255, 0.1);
     --exp-header-bg: #111827;
-    --exp-header-border: rgba(251, 191, 36, 0.15);
-    --exp-badge-bg: rgba(251, 191, 36, 0.1);
-    --exp-badge-border: rgba(251, 191, 36, 0.3);
+    --exp-header-border: rgba(45, 212, 191, 0.15);
+    --exp-badge-bg: rgba(45, 212, 191, 0.1);
+    --exp-badge-border: rgba(45, 212, 191, 0.3);
     --exp-badge-text: var(--accent-blue);
-    --edu-cta-bg: rgba(251, 191, 36, 0.08);
+    --edu-cta-bg: rgba(45, 212, 191, 0.08);
     --edu-cta-text: var(--accent-blue);
-    --edu-cta-border: rgba(251, 191, 36, 0.15);
-    --edu-cta-hover-bg: rgba(251, 191, 36, 0.16);
+    --edu-cta-border: rgba(45, 212, 191, 0.15);
+    --edu-cta-hover-bg: rgba(45, 212, 191, 0.16);
     --edu-cta-hover-text: var(--accent-blue-hover);
-    --edu-cta-fallback-bg: rgba(251, 191, 36, 0.08);
+    --edu-cta-fallback-bg: rgba(45, 212, 191, 0.08);
 
     --btn-text-color: #0F172A; /* Dark Mode Button Text */
 
-    /* RGB channels for filters/shadows (Vibrant Amber/Orange) */
-    --accent-rgb: 251, 191, 36;
+    /* RGB channels for filters/shadows (Teal 400) */
+    --accent-rgb: 45, 212, 191;
 }
 
 /* Import Fonts */
@@ -3520,32 +3520,49 @@ section:nth-of-type(even) {
 }
 
 .skill-pill-supporting {
-    background: rgba(15, 23, 42, 0.03);
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    padding: 8px 16px;
+    background: rgba(var(--accent-rgb), 0.08);
+    border: 1px solid rgba(var(--accent-rgb), 0.35);
+    padding: 10px 18px;
     border-radius: 10px;
     font-size: 0.95rem;
+    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.skill-pill-supporting:hover {
+    background: rgba(var(--accent-rgb), 0.16);
+    border-color: var(--accent-blue);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(var(--accent-rgb), 0.22);
 }
 
 .skill-pill-basic {
-    background: transparent;
-    border: 1px dashed rgba(15, 23, 42, 0.15);
-    padding: 6px 12px;
-    border-radius: 5px;
-    font-size: 0.85rem;
-    opacity: 0.6;
-    filter: grayscale(0.5);
+    background: rgba(var(--accent-rgb), 0.06);
+    border: 1px dashed rgba(var(--accent-rgb), 0.35);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    opacity: 0.85;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .skill-pill-basic:hover {
     opacity: 1;
     filter: grayscale(0);
     border-style: solid;
-    border-color: var(--text-secondary);
+    border-color: var(--accent-blue);
+    background: rgba(var(--accent-rgb), 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.18);
 }
 
 @media (max-width: 768px) {
