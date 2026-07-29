@@ -36,7 +36,7 @@ const portfolioData = {
             },
             {
                 title: "Generative AI & Prompting",
-                illustration: "resources/assets/images/expertise_ai.png",
+                illustration: "resources/assets/images/ai-domain.png",
                 techIcons: ["brain", "message-square", "shield-check", "edit-3", "check-circle"],
                 bullets: [
                     "Completed 500+ RLHF and SFT evaluation tasks for LLM outputs.",
@@ -144,110 +144,9 @@ const portfolioData = {
 
     // Projects
     projects: [
-        {
-            title: "California Retail Sales Analysis",
-            description: "Interactive dashboard analyzing 99K+ transactions across 10 California malls to uncover sales and performance trends.",
-            keyInsight: "Clothing led sales, with Del Amo Mall and LA generating peak revenue.",
-            problem: "Retail sales, customer, and shopping mall data were distributed across multiple datasets, making it difficult for management to monitor KPIs, identify high-performing locations, and make timely business decisions.",
-            dataset: "99,457 customer and sales transaction records integrated with shopping mall information across 10 California shopping malls using a relational Excel Data Model.",
-            approach: [
-                        "Cleaned and validated customer, sales, and shopping mall datasets.",
-                        "Built a relational data model in Excel using Power Pivot and one-to-many relationships.",
-                        "Created DAX Measures to calculate dynamic KPIs such as Total Sales, Average Order Value, and Revenue Contribution.",
-                        "Designed four interactive dashboards covering Executive Summary, Sales Analysis, Customer Analysis, and Shopping Mall Performance.",
-                        "Implemented slicers and Pivot Charts for dynamic filtering by Year, Month, and Age Group.",
-                        "Performed business analysis to identify top-performing product categories"
-                    ],
-            businessImpact: "Delivered an executive-level dashboard that replaces manual spreadsheet analysis with interactive reporting, enabling stakeholders to monitor KPIs, identify revenue opportunities, optimize inventory planning, and support data-driven business decisions.",
-            recommendations: [
-                "Prioritize inventory allocation for high-revenue categories (e.g., Clothing) in top-performing locations like Del Amo Mall and LA.",
-                "Implement targeted promotional campaigns and customer loyalty incentives during low-volume sales months.",
-                "Automate data refresh pipelines to provide management with real-time alerts on sales anomalies and stock depletion."
-            ],
-            techStack: ["DAX", "Data Visualization", "Excel Data Model", "Microsoft Excel",  "Power Pivot"],
-            category: "Business Intelligence",
-            image: "resources/assets/images/CMCS2123.png",
-            images: [
-                "resources/assets/images/CMCS2123.png",
-                "resources/assets/images/Mall.png"
-            ],
-            codeLink: "https://github.com/somenathsau/Excel-Projects/tree/main/P1-California_Retail_Sales_Analysis",
-            demoLink: "https://1drv.ms/x/c/451F38CD7B3963F9/IQBFGRKfvbVGSYZa-Vi-SkxdAR-LuJ0s4AhJxUmpy9Gvl6M?e=rWvpfF"
-        },
-        {
-            title: "Uber Data Analysis",
-            description: "Analyzed 10K+ Uber ride records to uncover demand trends and peak-hour patterns.",
-            keyInsight: "Peak ride demand increases by 35% during 6–9 PM.",
-            problem: "Uber struggles with vehicle allocation during varying demand periods, leading to longer wait times and lost revenue.",
-            dataset: "10,000+ historical Uber ride records containing timestamps, pickup/drop-off locations, and trip statuses.",
-            approach: [
-                "Performed extensive data cleaning to handle missing values and correct datetime formats.",
-                "Conducted Exploratory Data Analysis (EDA) to identify trip frequency by hour, day, and month.",
-                "Visualized demand-supply gaps across different city zones using heatmaps.",
-                "Analyzed cancellation rates and reasons during peak traffic hours."
-            ],
-            businessImpact: "Identified key surge periods, allowing for optimized driver allocation which could potentially reduce wait times by 15% and increase daily revenue.",
-            recommendations: [
-                "Deploy dynamic driver incentives during peak evening hours (6–9 PM) to align vehicle supply with demand spikes.",
-                "Implement anti-cancellation measures and driver bonuses in high-friction pickup zones to improve trip completion rates.",
-                "Integrate predictive machine learning models to forecast hourly demand and optimize shift routing for drivers."
-            ],
-            techStack: ["Python", "Numpy", "Pandas", "Matplotlib", "Seaborn"],
-            category: "Data Analysis",
-            image: "resources/assets/images/Uber_Project.webp",
-            images: [
-                "resources/assets/images/Uber_Project.webp"
-            ],
-            codeLink: "https://github.com/somenathsau/CodeClause-data-science-internship/tree/main/Project%202%20-%20Uber%20Data%20Analysis",
-            demoLink: "https://github.com/somenathsau/CodeClause-data-science-internship/blob/main/Project%202%20-%20Uber%20Data%20Analysis/Uber%20data%20analysis.ipynb"
-        },
-        {
-            title: "Crime Data Analysis in India",
-            description: "Analyzed historical crime datasets to identify trends and patterns in criminal activities across different states.",
-            keyInsight: "Property crimes constitute over 40% of reported incidents in urban centers.",
-            problem: "Law enforcement agencies lack clear visibility into macro-level crime trends, hindering effective resource deployment.",
-            dataset: "Comprehensive dataset from 2013 containing state-wise crime statistics, categorized by offense type and demographic.",
-            approach: [
-                "Cleaned and standardized state-level reporting inconsistencies.",
-                "Developed correlation matrices to find relationships between different crime categories.",
-                "Created comparative visual reports to highlight high-risk zones.",
-                "Segmented data by demographic impact to understand vulnerable populations."
-            ],
-            businessImpact: "Provided a data-driven foundation for predictive policing strategies, enabling more targeted patrol deployments in high-risk zones.",
-            recommendations: [
-                "Increase patrol frequency and smart surveillance infrastructure in urban centers where property crimes exceed 40% of incidents.",
-                "Establish unified inter-state crime data reporting protocols to track cross-border criminal patterns in real-time.",
-                "Deploy automated public alert systems and community awareness programs in identified high-risk zones."
-            ],
-            techStack: ["Python", "Matplotlib", "Scikit-learn", "Pandas"],
-            category: "Data Analysis",
-            image: "resources/assets/images/crime_correlation_heatmap.webp",
-            images: [
-                "resources/assets/images/crime_correlation_heatmap.webp"
-            ],
-            codeLink: "https://github.com/somenathsau/Crime_Report_in_India_2013",
-            demoLink: "https://github.com/somenathsau/Crime_Report_in_India_2013/blob/main/Crime_Report_Analysis_2013.ipynb"
-        },
-        // {
-        //     title: "AI-Assisted Portfolio Website",
-        //     description: "Developed a responsive developer portfolio using AI-assisted development (Vibe Coding) and automated workflows.",
-        //     keyInsight: "AI tools reduced boilerplate coding time by 60%.",
-        //     problem: "Building a portfolio from scratch is time-consuming and requires managing complex deployment and contact workflows.",
-        //     dataset: "N/A - Software Engineering Project",
-        //     approach: [
-        //         "Utilized LLMs for rapid prototyping and CSS grid generation.",
-        //         "Implemented Google Forms backend to bypass need for custom email servers.",
-        //         "Focused on Semantic HTML and accessibility standard compliance."
-        //     ],
-        //     businessImpact: "Created a highly professional, zero-maintenance lead generation funnel for job opportunities.",
-        //     techStack: ["AI-Assisted Dev", "Automation", "HTML/CSS", "JavaScript"],
-        //     category: "AI",
-        //     image: "resources/assets/images/portfolio-home.webp",
-        //     codeLink: "https://github.com/somenathsau/somenathsau.github.io",
-        //     demoLink: "https://somenathsau.github.io"
-        // }
-        
-
+        californiaRetailProject,
+        uberAnalysisProject,
+        crimeDataProject
     ],
 
     // Skills Section
