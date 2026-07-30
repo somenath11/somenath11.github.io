@@ -662,35 +662,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 7. Render Certifications Section
     const certGrid = document.getElementById('certGrid');
-    portfolioData.certifications.forEach((cert, index) => {
-        const card = document.createElement('div');
-        card.classList.add('cert-card-refined', 'fade-up');
-        card.style.transitionDelay = `${index * 0.1}s`;
+    if (certGrid && portfolioData.certifications) {
+        certGrid.innerHTML = '';
+        portfolioData.certifications.forEach((cert, index) => {
+            const card = document.createElement('div');
+            card.classList.add('cert-card-refined', 'fade-up');
+            card.style.transitionDelay = `${index * 0.1}s`;
 
-        card.innerHTML = `
-            <div class="cert-top-row">
-                <div class="cert-purple-icon">🎖️</div>
-                <span class="cert-date-pill">${cert.year}</span>
-            </div>
-            <div class="cert-middle-content">
-                <h3 class="cert-title-refined">${cert.title}</h3>
-                <p class="cert-issuer-refined">${cert.issuer}</p>
-            </div>
-            <a href="${cert.credentialLink}" class="cert-action-link" target="_blank">
-                ↗ View Credential
-            </a>
-        `;
-        certGrid.appendChild(card);
-    });
+            const metaHeaderHtml = cert.year ? `
+                <p class="cert-meta-header">
+                    <span>${cert.issuer}</span>
+                    <span class="cert-meta-dot">•</span>
+                    <span>${cert.year}</span>
+                </p>
+            ` : `
+                <p class="cert-meta-header">
+                    <span>${cert.issuer}</span>
+                </p>
+            `;
+
+            const imageHtml = cert.image ? `
+                <div class="cert-image-container">
+                    <img src="${cert.image}" alt="${cert.title}" loading="lazy" class="cert-card-img">
+                </div>
+            ` : '';
+
+            card.innerHTML = `
+                ${imageHtml}
+                <div class="cert-card-body">
+                    ${metaHeaderHtml}
+                    <h3 class="cert-title-refined">${cert.title}</h3>
+                    <a href="${cert.credentialLink}" class="cert-verify-corner-btn" target="_blank" rel="noopener noreferrer" title="Verify Credential">
+                        <i data-lucide="shield-check" class="cert-corner-icon"></i>
+                        <span>Verify</span>
+                    </a>
+                </div>
+            `;
+            certGrid.appendChild(card);
+        });
+    }
 
     // 8. Render Contact Links
     const contactLinksContainer = document.getElementById('contactLinks');
     const { linkedin, github, email } = portfolioData.socialLinks;
 
+    const linkedinUsername = linkedin.replace(/^https?:\/\/(www\.)?linkedin\.com\//, '').replace(/\/$/, '');
+    const githubUsername = github.replace(/^https?:\/\/(www\.)?github\.com\//, '').replace(/\/$/, '');
+
     contactLinksContainer.innerHTML = `
         <a href="${email}" class="contact-link"><i data-lucide="mail"></i> ${portfolioData.email}</a>
-        <a href="${linkedin}" class="contact-link"><i data-lucide="linkedin"></i> LinkedIn Profile</a>
-        <a href="${github}" class="contact-link"><i data-lucide="github"></i> GitHub Profile</a>
+        <a href="${linkedin}" class="contact-link" target="_blank" rel="noopener noreferrer"><i data-lucide="linkedin"></i> ${linkedinUsername}</a>
+        <a href="${github}" class="contact-link" target="_blank" rel="noopener noreferrer"><i data-lucide="github"></i> ${githubUsername}</a>
     `;
 
     // Render Footer Socials

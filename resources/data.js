@@ -200,31 +200,43 @@ const portfolioData = {
             title: "Career Essentials in Data Analysis by Microsoft and LinkedIn",
             issuer: "LinkedIn Learning",
             year: "June 2025",
-            credentialLink: "https://www.linkedin.com/learning/certificates/1899cbc5a9bcf6d12c823c702aeed4c975e463580ebceb87222d61ca65718aee" // Replace with actual link
+            image: "resources/assets/certificate/LinkedinDA.jpg",
+            credentialLink: "https://www.linkedin.com/learning/certificates/1899cbc5a9bcf6d12c823c702aeed4c975e463580ebceb87222d61ca65718aee"
         },
         {
             title: "Deloitte Australia - Data Analytics Job Simulation",
             issuer: "Forage",
             year: "May 2025",
-            credentialLink: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_cYkMuanGSYDTrvMry_1748362553606_completion_certificate.pdf" // Replace with actual link
+            image: "resources/assets/certificate/DeloitteDA.png",
+            credentialLink: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_cYkMuanGSYDTrvMry_1748362553606_completion_certificate.pdf"
         },
         {
             title: "Commonwealth Bank - Introduction to Data Science Job Simulation",
             issuer: "Forage",
             year: "May 2025",
-            credentialLink: "https://www.theforage.com/completion-certificates/2sNmYuurxgpFYawco/smwfytX3mcLboA9bf_2sNmYuurxgpFYawco_cYkMuanGSYDTrvMry_1747032386986_completion_certificate.pdf" // Replace with actual link
+            image: "resources/assets/certificate/ForageDA1.png",
+            credentialLink: "https://www.theforage.com/completion-certificates/2sNmYuurxgpFYawco/smwfytX3mcLboA9bf_2sNmYuurxgpFYawco_cYkMuanGSYDTrvMry_1747032386986_completion_certificate.pdf"
         },
         {
             title: "Cognizant - Artificial Intelligence Job Simulation",
             issuer: "Forage",
             year: "June 2024",
-            credentialLink: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Cognizant/5N2ygyhzMWjKQmgCK_Cognizant_cYkMuanGSYDTrvMry_1718646885974_completion_certificate.pdf" // Replace with actual link
+            image: "resources/assets/certificate/CognizantDA.png",
+            credentialLink: "https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Cognizant/5N2ygyhzMWjKQmgCK_Cognizant_cYkMuanGSYDTrvMry_1718646885974_completion_certificate.pdf"
         },
         {
             title: "AWS Academy Cloud Foundations",
             issuer: "Amazon Web Services (AWS)",
             year: "Sept 2023",
-            credentialLink: "https://www.credly.com/badges/2022e39a-a797-4f35-a533-5a15904b193b" // Replace with actual link
+            image: "resources/assets/certificate/AWS2023.png",
+            credentialLink: "https://www.credly.com/badges/2022e39a-a797-4f35-a533-5a15904b193b"
+        },
+        {
+            title: "Red hat System Administration I (RH124)",
+            issuer: "KIIT University",
+            year: "Sept 2023",
+            image: "resources/assets/certificate/RH124.png",
+            credentialLink: "https://drive.google.com/file/d/10hKq3nuzWNbJDoVwxEaj7O4YDy9MGqMQ/view?usp=sharing"
         }
     ]
 };

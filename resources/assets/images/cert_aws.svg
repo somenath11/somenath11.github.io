@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradAWS" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1917"/>
+      <stop offset="50%" stop-color="#292524"/>
+      <stop offset="100%" stop-color="#0c0a09"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+    <filter id="shadowAWS" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="16" fill="url(#bgGradAWS)"/>
+  
+  <!-- Outer Border -->
+  <rect x="24" y="24" width="752" height="452" rx="12" fill="none" stroke="#ea580c" stroke-width="2" stroke-opacity="0.6"/>
+  <rect x="32" y="32" width="736" height="436" rx="8" fill="none" stroke="#ea580c" stroke-width="1" stroke-opacity="0.2"/>
+
+  <!-- Top Header AWS Branding -->
+  <g transform="translate(400, 75)">
+    <path d="M-20 -10 Q0 -25 20 -10 Q10 15 -20 -10 Z" fill="none" stroke="url(#orangeGrad)" stroke-width="3" stroke-linecap="round"/>
+    <text x="0" y="5" text-anchor="middle" fill="#ffffff" font-family="'Outfit', sans-serif" font-size="22" font-weight="900" letter-spacing="2">aws</text>
+  </g>
+
+  <!-- Sub Header -->
+  <text x="400" y="145" text-anchor="middle" fill="#fb923c" font-family="'Outfit', sans-serif" font-size="14" font-weight="700" letter-spacing="3">AMAZON WEB SERVICES (AWS)</text>
+  <text x="400" y="175" text-anchor="middle" fill="#94a3b8" font-family="'Outfit', sans-serif" font-size="13" font-weight="600" letter-spacing="4">AWS ACADEMY GRADUATE CERTIFICATE</text>
+
+  <!-- Divider Line -->
+  <line x1="250" y1="195" x2="550" y2="195" stroke="#ea580c" stroke-width="1.5" stroke-opacity="0.5"/>
+
+  <!-- Certificate Title -->
+  <text x="400" y="250" text-anchor="middle" fill="#f8fafc" font-family="'Outfit', sans-serif" font-size="28" font-weight="700">AWS Academy Cloud Foundations</text>
+
+  <!-- Recipient / Subtext -->
+  <text x="400" y="295" text-anchor="middle" fill="#cbd5e1" font-family="'Outfit', sans-serif" font-size="15" font-weight="400">Awarded to <tspan fill="#fb923c" font-weight="600">Somenath Sau</tspan></text>
+  <text x="400" y="325" text-anchor="middle" fill="#64748b" font-family="'Outfit', sans-serif" font-size="13">Cloud Architecture, Security, Networking &amp; Core AWS Services</text>
+
+  <!-- Bottom Verification Footer -->
+  <g transform="translate(0, 380)">
+    <!-- Left Orange Seal -->
+    <g transform="translate(100, 35)">
+      <circle cx="0" cy="0" r="22" fill="url(#orangeGrad)" opacity="0.9"/>
+      <circle cx="0" cy="0" r="18" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+      <path d="M-8 0 L-2 6 L8 -4" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <!-- Center Credential ID -->
+    <text x="400" y="30" text-anchor="middle" fill="#52525b" font-family="monospace" font-size="12">CREDLY BADGE ID: 2022e39a-a797-4f35</text>
+    <text x="400" y="48" text-anchor="middle" fill="#fb923c" font-family="'Outfit', sans-serif" font-size="12" font-weight="600">ISSUED: SEPT 2023</text>
+
+    <!-- Right Brand Badge -->
+    <g transform="translate(680, 30)">
+      <rect x="-40" y="-15" width="80" height="30" rx="6" fill="#292524" stroke="#44403c" stroke-width="1"/>
+      <text x="0" y="5" text-anchor="middle" fill="#fb923c" font-family="'Outfit', sans-serif" font-size="12" font-weight="800">Credly</text>
+    </g>
+  </g>
+</svg>
