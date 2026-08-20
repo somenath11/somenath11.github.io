@@ -144,9 +144,11 @@ const portfolioData = {
 
     // Projects
     projects: [
+        blinkitAnalysis,
         californiaRetailProject,
         uberAnalysisProject,
         crimeDataProject
+        
     ],
 
     // Skills Section
