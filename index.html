@@ -131,15 +131,15 @@
     <main class="main-content-wrapper" id="mainContent">
 
     <!-- Hero Section -->
-    <section id="home" class="hero-section">
+    <section id="home" class="hero-section active-section">
         <div class="hero-background"></div>
-        <div class="hero-content fade-up">
+        <div class="hero-content fade-up visible">
             <div class="hero-text">
                 <div class="hero-header-info">
                     <p class="greeting">Hello, I'm</p>
-                    <h1 class="hero-name gradient-text" id="heroName"></h1>
-                    <p class="hero-role" id="heroRoleDisplay"></p>
-                    <p class="hero-microline" id="heroMicroline"></p>
+                    <h1 class="hero-name gradient-text" id="heroName">SOMENATH SAU</h1>
+                    <p class="hero-role" id="heroRoleDisplay">Data Analyst at Landmine Soft</p>
+                    <p class="hero-microline" id="heroMicroline">Power BI | Dashboard | Data Analysis | Generative AI | Prompt Engineering</p>
                 </div>
 
                 <div class="hero-visuals-wrapper">
@@ -152,7 +152,12 @@
                     </div>
                 </div>
 
-                <p class="hero-bio fade-up" id="heroBio"></p>
+                <p class="hero-bio fade-up visible" id="heroBio">
+                    ✔ Transform complex data into insights that improve reporting efficiency.<br>
+                    ✔ Build automated dashboards using Python, SQL, and Power BI.<br>
+                    ✔ Streamline analytical workflows using Gen AI.<br>
+                    ✔ Identify trends to support faster and smarter business decisions.
+                </p>
 
                 <div class="hero-buttons-container">
                     <a href="#projects" class="btn-primary hero-btn-projects">Explore Projects</a>
@@ -179,7 +184,7 @@
 
 
     <!-- About Section Redesign -->
-    <section id="about" class="section about-redesign">
+    <section id="about" class="section about-redesign active-section">
         <div class="container">
             <h2 class="section-title fade-up">My <span class="accent">Expertise</span></h2>
             <div id="knowledgeContainer" class="knowledge-container">
@@ -294,25 +299,31 @@
                 </div>
 
                 <!-- Hidden Iframe to prevent redirect -->
-                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {
+                <script>var submitted = false;</script>
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(typeof submitted !== 'undefined' && submitted) {
                         const btn = document.querySelector('.contact-form button');
-                        btn.classList.remove('btn-loading');
-                        btn.textContent = 'Message Submitted!';
-                        btn.style.backgroundColor = '#28a745'; 
-                        
-                        setTimeout(() => {
-                            btn.textContent = 'Submit';
-                            btn.style.backgroundColor = ''; 
-                            document.querySelector('.contact-form').reset();
-                        }, 3000);
+                        if (btn) {
+                            btn.classList.remove('btn-loading');
+                            btn.textContent = 'Message Submitted!';
+                            btn.style.backgroundColor = '#28a745'; 
+                            
+                            setTimeout(() => {
+                                btn.textContent = 'Submit';
+                                btn.style.backgroundColor = ''; 
+                                const form = document.querySelector('.contact-form');
+                                if (form) form.reset();
+                            }, 3000);
+                        }
                     }"></iframe>
 
                 <form
                     action="https://docs.google.com/forms/d/e/1FAIpQLSfp-a_8jX7g4zAE1zK72U6KinNCWsyelOrdkgEaMngipDjdvA/formResponse"
                     method="post" target="hidden_iframe" onsubmit="submitted=true; 
                                 const btn = this.querySelector('button');
-                                btn.classList.add('btn-loading');
-                                btn.textContent = ''; " class="contact-form glass-card fade-up">
+                                if (btn) {
+                                    btn.classList.add('btn-loading');
+                                    btn.textContent = '';
+                                }" class="contact-form glass-card fade-up">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="entry.149004916" placeholder="Your Name" required>
@@ -327,7 +338,6 @@
                             required></textarea>
                     </div>
                     <button type="submit" class="btn-primary">Submit</button>
-                    <script>var submitted = false;</script>
                 </form>
             </div>
         </div>
@@ -402,7 +412,7 @@
     <script src="resources/data.js?v=21.0"></script>
     <script src="resources/script.js?v=21.0"></script>
     <script>
-        lucide.createIcons();
+        if (typeof lucide !== 'undefined') lucide.createIcons();
     </script>
 </body>
 

@@ -29,6 +29,6 @@ const blinkitAnalysis = {
         "resources/assets/images/blinkit-marketing.png",
         "resources/assets/images/blinkit-cs.png"
     ],
-    codeLink: "https://github.com/somenathsau/PowerBI-Projects",
-    demoLink: "https://github.com/somenathsau/PowerBI-Projects"
+    codeLink: "https://github.com/somenathsau/blinkit-business-analytics",
+    demoLink: "https://1drv.ms/u/c/451F38CD7B3963F9/IQAq39KlnD3KTKylGqIEDqGqAWMY8zRC4kWALMLstFXOV-I?e=auxl6e"
 };

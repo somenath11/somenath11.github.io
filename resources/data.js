@@ -144,12 +144,11 @@ const portfolioData = {
 
     // Projects
     projects: [
-        blinkitAnalysis,
-        californiaRetailProject,
-        uberAnalysisProject,
-        crimeDataProject
-        
-    ],
+        typeof blinkitAnalysis !== 'undefined' ? blinkitAnalysis : null,
+        typeof californiaRetailProject !== 'undefined' ? californiaRetailProject : null,
+        typeof uberAnalysisProject !== 'undefined' ? uberAnalysisProject : null,
+        typeof crimeDataProject !== 'undefined' ? crimeDataProject : null
+    ].filter(Boolean),
 
     // Skills Section
     skills: [

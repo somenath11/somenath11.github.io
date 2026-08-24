@@ -6,9 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const greetingEl = document.querySelector('.greeting');
     if (greetingEl) greetingEl.innerHTML = "Hello, I'm";
 
-    document.getElementById('heroName').textContent = portfolioData.name;
+    const heroNameEl = document.getElementById('heroName');
+    if (heroNameEl && portfolioData.name) heroNameEl.textContent = portfolioData.name;
+
     const heroRoleDisplay = document.getElementById('heroRoleDisplay');
-    if (heroRoleDisplay) heroRoleDisplay.textContent = portfolioData.role;
+    if (heroRoleDisplay && portfolioData.role) heroRoleDisplay.textContent = portfolioData.role;
 
     const heroMicroline = document.getElementById('heroMicroline');
     if (heroMicroline && portfolioData.microline) {
@@ -16,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const heroBioEl = document.getElementById('heroBio');
-    if (heroBioEl) heroBioEl.innerHTML = portfolioData.bio;
+    if (heroBioEl && portfolioData.bio) heroBioEl.innerHTML = portfolioData.bio;
 
 
 
@@ -63,14 +65,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="social-label">Email</span>
             </a>
         `;
-        lucide.createIcons()
+        if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
     // Render Hero Highlights (Replacing Ticker)
     const heroSkillsContainer = document.getElementById('heroSkillsTicker');
-    // We'll reuse the container but change the class in CSS or here
-    heroSkillsContainer.className = 'hero-highlights'; // Change class
-    heroSkillsContainer.innerHTML = ''; // Clear
+    if (heroSkillsContainer) {
+        heroSkillsContainer.className = 'hero-highlights'; // Change class
+        heroSkillsContainer.innerHTML = ''; // Clear
+    }
 
 
     // 2. Render About Section (Redesigned)
@@ -159,10 +162,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Sort by End Date (Descending) - Latest First
         const sortedExperience = [...portfolioData.experience].sort((a, b) => {
-            // Extract dates: "Nov 2023 - Dec 2023" -> ["Nov 2023", "Dec 2023"]
+            // Extract dates: "Nov 2023 - Dec 2023" or "Nov 2023 – Dec 2023"
             const getEndDate = (duration) => {
                 if (!duration) return new Date(0);
-                const parts = duration.split('-');
+                const parts = duration.split(/[-–—]/);
                 const endStr = parts[1] ? parts[1].trim() : parts[0].trim(); // If no end, use start (or handle 'Present')
                 if (endStr.toLowerCase() === 'present' || endStr.toLowerCase() === 'ongoing') return new Date(); // Future/Now
                 return parseDate(endStr);
@@ -704,20 +707,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 8. Render Contact Links
     const contactLinksContainer = document.getElementById('contactLinks');
-    const { linkedin, github, email } = portfolioData.socialLinks;
+    if (contactLinksContainer && portfolioData.socialLinks) {
+        const { linkedin, github, email } = portfolioData.socialLinks;
 
-    const linkedinUsername = linkedin.replace(/^https?:\/\/(www\.)?linkedin\.com\//, '').replace(/\/$/, '');
-    const githubUsername = github.replace(/^https?:\/\/(www\.)?github\.com\//, '').replace(/\/$/, '');
+        const linkedinUsername = (linkedin || '').replace(/^https?:\/\/(www\.)?linkedin\.com\//, '').replace(/\/$/, '');
+        const githubUsername = (github || '').replace(/^https?:\/\/(www\.)?github\.com\//, '').replace(/\/$/, '');
 
-    contactLinksContainer.innerHTML = `
-        <a href="${email}" class="contact-link"><i data-lucide="mail"></i> ${portfolioData.email}</a>
-        <a href="${linkedin}" class="contact-link" target="_blank" rel="noopener noreferrer"><i data-lucide="linkedin"></i> ${linkedinUsername}</a>
-        <a href="${github}" class="contact-link" target="_blank" rel="noopener noreferrer"><i data-lucide="github"></i> ${githubUsername}</a>
-    `;
+        contactLinksContainer.innerHTML = `
+            <a href="${email}" class="contact-link"><i data-lucide="mail"></i> ${portfolioData.email}</a>
+            <a href="${linkedin}" class="contact-link" target="_blank" rel="noopener noreferrer"><i data-lucide="linkedin"></i> ${linkedinUsername}</a>
+            <a href="${github}" class="contact-link" target="_blank" rel="noopener noreferrer"><i data-lucide="github"></i> ${githubUsername}</a>
+        `;
+    }
 
     // Render Footer Socials
     const footerSocials = document.getElementById('footerSocials');
-    if (footerSocials) {
+    if (footerSocials && portfolioData.socialLinks) {
+        const { linkedin, github, email } = portfolioData.socialLinks;
         footerSocials.innerHTML = `
             <a href="${linkedin}" target="_blank" class="footer-social-link linkedin" title="LinkedIn"><i data-lucide="linkedin"></i></a>
             <a href="${github}" target="_blank" class="footer-social-link github" title="GitHub"><i data-lucide="github"></i></a>
@@ -727,7 +733,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render Sidebar Socials
     const sidebarSocials = document.getElementById('sidebarSocials');
-    if (sidebarSocials) {
+    if (sidebarSocials && portfolioData.socialLinks) {
+        const { linkedin, github, email } = portfolioData.socialLinks;
         sidebarSocials.innerHTML = `
             <a href="${linkedin}" target="_blank" class="footer-social-link linkedin" title="LinkedIn"><i data-lucide="linkedin"></i></a>
             <a href="${github}" target="_blank" class="footer-social-link github" title="GitHub"><i data-lucide="github"></i></a>
@@ -736,7 +743,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Initialize Icons AFTER dynamic content is added
-    lucide.createIcons();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 
 
     // --- UI/UX INTERATIONS ---
@@ -790,18 +797,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Scroll Progress Bar
     const scrollProgressBar = document.getElementById('scrollProgressBar');
+    const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
         const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrollPercentage = (scrollTop / scrollHeight) * 100;
-        scrollProgressBar.style.width = scrollPercentage + '%';
+        const scrollPercentage = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        if (scrollProgressBar) {
+            scrollProgressBar.style.width = scrollPercentage + '%';
+        }
 
         // Navbar Sticky Effect
-        const navbar = document.getElementById('navbar');
-        if (scrollTop > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+        if (navbar) {
+            if (scrollTop > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         }
     });
 
@@ -876,15 +887,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3D Tilt Effect REMOVED
     // Cards now use CSS transform: translateY(-5px) for a subtle lift effect.
 
-    // Navbar Scroll Effect
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
+
 
     // --- SINGLE PAGE APPLICATION (SPA) CLEAN URL ROUTING ---
     function getCurrentRoute() {
