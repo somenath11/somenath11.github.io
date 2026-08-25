@@ -17,7 +17,8 @@ const uberAnalysisProject = {
         "Integrate predictive machine learning models to forecast hourly demand and optimize shift routing for drivers."
     ],
     techStack: ["Python", "Numpy", "Pandas", "Matplotlib", "Seaborn"],
-    category: "Data Analysis",
+    category: "Operations Analytics",
+    datasetScope: "10K+ Rides",
     image: "resources/assets/images/Uber_Project.webp",
     images: [
         "resources/assets/images/Uber_Project.webp"

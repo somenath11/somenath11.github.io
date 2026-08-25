@@ -19,8 +19,9 @@ const blinkitAnalysis = {
         "Scale high-ROI marketing channels by reallocating ad spend toward Referral Programs (₹6,152/order) and App Push Campaigns during high-demand Q2/Q3 cycles.",
         "Address root causes of 41% negative customer sentiment across product quality and delivery speed to boost CSAT score from 30% and reactivate 495 inactive users."
     ],
-    techStack: ["Power BI", "DAX", "Data Modeling", "Business Intelligence", "Supply Chain Analytics", "KPI Dashboard"],
+    techStack: ["Power BI", "DAX", "Data Modeling", "Business Intelligence", "KPI Dashboard"],
     category: "Business Intelligence",
+    datasetScope: "166K+ Records",
     image: "resources/assets/images/blinkit-sales.png",
     images: [
         "resources/assets/images/blinkit-sales.png",

@@ -526,37 +526,71 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof lucide !== 'undefined') lucide.createIcons();
     };
 
-    const projectsGrid = document.getElementById('projectsGrid');
-    if (projectsGrid) {
-        projectsGrid.className = 'projects-grid-2col';
-        projectsGrid.innerHTML = ''; 
-        
-        portfolioData.projects.forEach((project, index) => {
-            const card = document.createElement('div');
-            card.classList.add('project-card-v2', 'fade-up');
-            card.style.transitionDelay = `${index * 0.1}s`;
+    function renderProjects(filter = 'all') {
+        const projectsGrid = document.getElementById('projectsGrid');
+        if (!projectsGrid || !portfolioData.projects) return;
 
-            const techPillsHtml = project.techStack.map(tech => `<span>${tech}</span>`).join('');
-            
-            const insightHtml = project.keyInsight 
-                ? `<div class="project-insight"><i data-lucide="zap"></i> ${project.keyInsight}</div>` 
+        projectsGrid.className = 'projects-grid-3col';
+        projectsGrid.innerHTML = '';
+
+        const normalizedFilter = filter.toLowerCase().trim();
+
+        const filteredProjectsWithIndex = portfolioData.projects.map((proj, idx) => ({ proj, originalIndex: idx })).filter(({ proj }) => {
+            if (normalizedFilter === 'all') return true;
+
+            const techString = (proj.techStack ? proj.techStack.join(' ') : '').toLowerCase();
+            const titleString = (proj.title || '').toLowerCase();
+            const categoryString = (proj.category || '').toLowerCase();
+            const descString = (proj.description || '').toLowerCase();
+            const fullText = `${techString} ${titleString} ${categoryString} ${descString}`;
+
+            if (normalizedFilter === 'excel') {
+                return techString.includes('excel') || titleString.includes('excel');
+            } else if (normalizedFilter === 'power-bi' || normalizedFilter === 'power bi' || normalizedFilter === 'powerbi') {
+                return techString.includes('power bi') || techString.includes('powerbi') || titleString.includes('power bi');
+            } else if (normalizedFilter === 'sql') {
+                return techString.includes('sql');
+            } else if (normalizedFilter === 'python') {
+                return techString.includes('python');
+            }
+            return true;
+        });
+
+        if (filteredProjectsWithIndex.length === 0) {
+            projectsGrid.innerHTML = `
+                <div class="no-projects-msg">
+                    <p>No projects found matching "<strong>${filter}</strong>".</p>
+                </div>
+            `;
+            return;
+        }
+
+        filteredProjectsWithIndex.forEach(({ proj: project, originalIndex }, renderIdx) => {
+            const card = document.createElement('div');
+            card.classList.add('project-card-v2', 'data-analyst-card', 'fade-up', 'visible');
+            card.style.transitionDelay = `${renderIdx * 0.08}s`;
+
+            const techPillsHtml = project.techStack 
+                ? project.techStack.slice(0, 4).map(tech => `<span>${tech}</span>`).join('') 
                 : '';
+
+            const descriptionText = project.description || project.keyInsight || '';
 
             card.innerHTML = `
                 <div class="project-card-image">
-                    <div class="project-image-wrapper open-project-btn" data-index="${index}">
+                    <div class="project-image-wrapper open-project-btn" data-index="${originalIndex}" title="Click to view detailed analytics case study">
                         <img src="${project.image}" alt="${project.title}" loading="lazy">
                         <div class="project-image-overlay">
-                            <span class="project-image-badge"><i data-lucide="eye"></i> View Details</span>
+                            <span class="project-image-badge"><i data-lucide="bar-chart-3"></i> View Case Study</span>
                         </div>
                     </div>
                 </div>
                 <div class="project-card-content">
                     <h3 class="project-title">${project.title}</h3>
-                    ${insightHtml}
+                    <p class="project-desc">${descriptionText}</p>
                     <div class="tech-stack-v2">${techPillsHtml}</div>
                     <div class="project-card-actions">
-                        <button class="btn-primary open-project-btn" data-index="${index}">View Details</button>
+                        <button class="btn-primary open-project-btn" data-index="${originalIndex}"><i data-lucide="bar-chart-2"></i> Case Study</button>
                         <a href="${project.codeLink}" class="btn-secondary" target="_blank"><i data-lucide="github"></i> Repository</a>
                     </div>
                 </div>
@@ -564,14 +598,29 @@ document.addEventListener('DOMContentLoaded', () => {
             projectsGrid.appendChild(card);
         });
 
-        document.querySelectorAll('.open-project-btn').forEach(btn => {
+        projectsGrid.querySelectorAll('.open-project-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const idx = e.currentTarget.getAttribute('data-index');
                 setActiveSection(`project-${idx}`, false);
                 updateCleanUrl(`project-${idx}`, true);
             });
         });
+
+        if (typeof lucide !== 'undefined') lucide.createIcons();
     }
+
+    window.renderProjects = renderProjects;
+    renderProjects('all');
+
+    // Attach Project Slicer Filter Listeners
+    document.querySelectorAll('.project-slicer-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('.project-slicer-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const filterVal = this.getAttribute('data-filter');
+            renderProjects(filterVal);
+        });
+    });
 
     // Resume Modal Logic
     const resumeModal = document.getElementById('resumeModal');
@@ -710,14 +759,58 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactLinksContainer && portfolioData.socialLinks) {
         const { linkedin, github, email } = portfolioData.socialLinks;
 
-        const linkedinUsername = (linkedin || '').replace(/^https?:\/\/(www\.)?linkedin\.com\//, '').replace(/\/$/, '');
-        const githubUsername = (github || '').replace(/^https?:\/\/(www\.)?github\.com\//, '').replace(/\/$/, '');
+        const linkedinClean = (linkedin || '').replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+        const githubClean = (github || '').replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 
-        contactLinksContainer.innerHTML = `
-            <a href="${email}" class="contact-link"><i data-lucide="mail"></i> ${portfolioData.email}</a>
-            <a href="${linkedin}" class="contact-link" target="_blank" rel="noopener noreferrer"><i data-lucide="linkedin"></i> ${linkedinUsername}</a>
-            <a href="${github}" class="contact-link" target="_blank" rel="noopener noreferrer"><i data-lucide="github"></i> ${githubUsername}</a>
+        let contactHtml = `
+            <a href="${email}" class="contact-card-item">
+                <div class="contact-card-icon">
+                    <i data-lucide="mail"></i>
+                </div>
+                <div class="contact-card-details">
+                    <span class="contact-card-label">Email</span>
+                    <span class="contact-card-value">${portfolioData.email}</span>
+                </div>
+            </a>
         `;
+
+        if (portfolioData.phone) {
+            contactHtml += `
+                <a href="tel:${portfolioData.phone.replace(/[^+\d]/g, '')}" class="contact-card-item">
+                    <div class="contact-card-icon">
+                        <i data-lucide="phone"></i>
+                    </div>
+                    <div class="contact-card-details">
+                        <span class="contact-card-label">Phone</span>
+                        <span class="contact-card-value">${portfolioData.phone}</span>
+                    </div>
+                </a>
+            `;
+        }
+
+        contactHtml += `
+            <a href="${linkedin}" class="contact-card-item" target="_blank" rel="noopener noreferrer">
+                <div class="contact-card-icon">
+                    <i data-lucide="linkedin"></i>
+                </div>
+                <div class="contact-card-details">
+                    <span class="contact-card-label">LinkedIn</span>
+                    <span class="contact-card-value">${linkedinClean}</span>
+                </div>
+            </a>
+            <a href="${github}" class="contact-card-item" target="_blank" rel="noopener noreferrer">
+                <div class="contact-card-icon">
+                    <i data-lucide="github"></i>
+                </div>
+                <div class="contact-card-details">
+                    <span class="contact-card-label">GitHub</span>
+                    <span class="contact-card-value">${githubClean}</span>
+                </div>
+            </a>
+        `;
+
+        contactLinksContainer.innerHTML = contactHtml;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
     // Render Footer Socials
@@ -731,66 +824,69 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    // Render Sidebar Socials
+    // Render Mobile Nav Socials
+    const mobileNavSocials = document.getElementById('mobileNavSocials');
     const sidebarSocials = document.getElementById('sidebarSocials');
-    if (sidebarSocials && portfolioData.socialLinks) {
+    if ((mobileNavSocials || sidebarSocials) && portfolioData.socialLinks) {
         const { linkedin, github, email } = portfolioData.socialLinks;
-        sidebarSocials.innerHTML = `
+        const socialsHtml = `
             <a href="${linkedin}" target="_blank" class="footer-social-link linkedin" title="LinkedIn"><i data-lucide="linkedin"></i></a>
             <a href="${github}" target="_blank" class="footer-social-link github" title="GitHub"><i data-lucide="github"></i></a>
             <a href="${email}" class="footer-social-link email" title="Email"><i data-lucide="mail"></i></a>
         `;
+        if (mobileNavSocials) mobileNavSocials.innerHTML = socialsHtml;
+        if (sidebarSocials) sidebarSocials.innerHTML = socialsHtml;
     }
 
     // Initialize Icons AFTER dynamic content is added
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
 
-    // --- UI/UX INTERATIONS ---
+    // --- UI/UX INTERACTIONS ---
 
-    // Mobile Left Sidebar Drawer Toggle
+    // Mobile Top Navigation Menu Toggle
     const mobileMenu = document.getElementById('mobile-menu');
-    const sidebar = document.getElementById('sidebar');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const mobileNavMenu = document.getElementById('mobileNavMenu');
+    const navBackdrop = document.getElementById('navBackdrop');
 
-    if (mobileMenu && sidebar) {
-        const toggleMobileSidebar = (open) => {
-            const shouldOpen = open !== undefined ? open : !sidebar.classList.contains('active');
+    if (mobileMenu && mobileNavMenu) {
+        const toggleMobileNav = (open) => {
+            const shouldOpen = open !== undefined ? open : !mobileNavMenu.classList.contains('active');
             if (shouldOpen) {
-                sidebar.classList.add('active');
+                mobileNavMenu.classList.add('active');
                 mobileMenu.classList.add('active');
-                if (sidebarOverlay) sidebarOverlay.classList.add('active');
+                if (navBackdrop) navBackdrop.classList.add('active');
                 document.body.style.overflow = 'hidden';
             } else {
-                sidebar.classList.remove('active');
+                mobileNavMenu.classList.remove('active');
                 mobileMenu.classList.remove('active');
-                if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+                if (navBackdrop) navBackdrop.classList.remove('active');
                 document.body.style.overflow = '';
             }
         };
 
         mobileMenu.addEventListener('click', (e) => {
             e.stopPropagation();
-            toggleMobileSidebar();
+            toggleMobileNav();
         });
 
-        if (sidebarOverlay) {
-            sidebarOverlay.addEventListener('click', () => {
-                toggleMobileSidebar(false);
+        if (navBackdrop) {
+            navBackdrop.addEventListener('click', () => {
+                toggleMobileNav(false);
             });
         }
 
-        // Close Left Sidebar when a link is clicked
-        sidebar.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                toggleMobileSidebar(false);
+        // Close Mobile Menu when any link or modal button inside it is clicked
+        mobileNavMenu.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('click', () => {
+                toggleMobileNav(false);
             });
         });
 
-        // Close Left Sidebar on Escape key
+        // Close Mobile Menu on Escape key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
-                toggleMobileSidebar(false);
+            if (e.key === 'Escape' && mobileNavMenu.classList.contains('active')) {
+                toggleMobileNav(false);
             }
         });
     }
@@ -955,7 +1051,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.updateCleanUrl = updateCleanUrl;
 
-    function setActiveSection(targetRoute, shouldUpdateUrl = true) {
+    function isMobileMode() {
+        return window.innerWidth <= 992;
+    }
+
+    function updateNavActiveLinks(activeId) {
+        document.querySelectorAll('.nav-links a, .mobile-nav-links a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href) {
+                const linkId = href.replace('#', '');
+                if (linkId === activeId || (activeId === 'about' && linkId === 'home')) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            }
+        });
+    }
+
+    function setActiveSection(targetRoute, shouldUpdateUrl = true, shouldScroll = true) {
         let rawId = (targetRoute || getCurrentRoute()).replace('#', '');
         
         let isProjectDetail = false;
@@ -974,69 +1088,162 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const validSections = ['home', 'about', 'projects', 'skills', 'experience', 'education', 'certifications', 'contact'];
-        
         let activeId = validSections.includes(rawId) ? rawId : 'home';
 
         if (!validSections.includes(rawId) && !isProjectDetail) {
             routeForUrl = 'home';
         }
 
-        // Hide all sections
-        document.querySelectorAll('.hero-section, .section').forEach(sec => {
-            sec.classList.remove('active-section');
-        });
+        const isMobile = isMobileMode();
 
-        // Show active section(s)
-        if (activeId === 'home' || activeId === 'about') {
-            const homeSec = document.getElementById('home');
-            const aboutSec = document.getElementById('about');
-            if (homeSec) homeSec.classList.add('active-section');
-            if (aboutSec) aboutSec.classList.add('active-section');
-            activeId = 'home';
-            routeForUrl = 'home';
+        if (!isMobile) {
+            // ==========================================
+            // DESKTOP VIEW (> 992px): Tab-based SPA Mode
+            // ==========================================
+            // Hide all sections
+            document.querySelectorAll('.hero-section, .section').forEach(sec => {
+                sec.classList.remove('active-section');
+            });
+
+            // Show active section(s)
+            if (activeId === 'home' || activeId === 'about') {
+                const homeSec = document.getElementById('home');
+                const aboutSec = document.getElementById('about');
+                if (homeSec) homeSec.classList.add('active-section');
+                if (aboutSec) aboutSec.classList.add('active-section');
+                activeId = 'home';
+                routeForUrl = 'home';
+            } else {
+                const targetSec = document.getElementById(activeId);
+                if (targetSec) targetSec.classList.add('active-section');
+            }
+
+            if (activeId === 'projects') {
+                if (isProjectDetail && projectIndex !== null) {
+                    if (typeof window.showProjectDetails === 'function') {
+                        window.showProjectDetails(projectIndex);
+                    }
+                } else {
+                    if (typeof window.showProjectsList === 'function') {
+                        window.showProjectsList();
+                    }
+                }
+            }
+
+            // Trigger animations for .fade-up inside active sections
+            document.querySelectorAll('.active-section .fade-up').forEach(el => {
+                el.classList.add('visible');
+            });
+
+            updateNavActiveLinks(activeId);
+
+            if (shouldUpdateUrl) {
+                updateCleanUrl(routeForUrl, false);
+            }
+
+            if (shouldScroll) {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            }
         } else {
-            const targetSec = document.getElementById(activeId);
-            if (targetSec) targetSec.classList.add('active-section');
-        }
-
-        if (activeId === 'projects') {
+            // ==============================================================
+            // MOBILE VIEW (<= 992px): Continuous Single Scrollable Page Mode
+            // ==============================================================
             if (isProjectDetail && projectIndex !== null) {
                 if (typeof window.showProjectDetails === 'function') {
                     window.showProjectDetails(projectIndex);
                 }
-            } else {
+                const projSec = document.getElementById('projects');
+                if (projSec && shouldScroll) {
+                    const navHeight = 66;
+                    const targetTop = projSec.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                    window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+                }
+            } else if (activeId === 'projects' && !isProjectDetail) {
                 if (typeof window.showProjectsList === 'function') {
                     window.showProjectsList();
                 }
             }
-        }
 
-        // Trigger animations for .fade-up inside active sections
-        document.querySelectorAll('.active-section .fade-up').forEach(el => {
-            el.classList.add('visible');
-        });
-
-        // Update nav links active state in both desktop sidebar and mobile navbar
-        document.querySelectorAll('.nav-links a, .sidebar-nav a').forEach(link => {
-            const href = link.getAttribute('href');
-            if (href) {
-                const linkId = href.replace('#', '');
-                if (linkId === activeId) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
+            if (!isProjectDetail && shouldScroll) {
+                const targetElem = document.getElementById(activeId === 'about' ? 'about' : (activeId === 'home' ? 'home' : activeId));
+                if (targetElem) {
+                    const navHeight = 66;
+                    const targetTop = activeId === 'home' ? 0 : (targetElem.getBoundingClientRect().top + window.pageYOffset - navHeight);
+                    window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
                 }
             }
-        });
 
-        if (shouldUpdateUrl) {
-            updateCleanUrl(routeForUrl, false);
+            // Reveal all fade-up elements in view
+            document.querySelectorAll('.fade-up').forEach(el => {
+                el.classList.add('visible');
+            });
+
+            updateNavActiveLinks(activeId);
+
+            if (shouldUpdateUrl) {
+                updateCleanUrl(routeForUrl, false);
+            }
         }
 
-        // Scroll to top of main content area
-        window.scrollTo({ top: 0, behavior: 'instant' });
         if (typeof lucide !== 'undefined') lucide.createIcons();
     }
+
+    // --- Mobile Scrollspy ---
+    const mobileSectionsList = ['home', 'about', 'projects', 'skills', 'experience', 'education', 'certifications', 'contact'];
+    
+    function handleMobileScrollspy() {
+        if (!isMobileMode()) return;
+        const scrollPosition = window.pageYOffset + 140;
+        
+        for (let i = mobileSectionsList.length - 1; i >= 0; i--) {
+            const sectionId = mobileSectionsList[i];
+            const sectionElem = document.getElementById(sectionId);
+            if (sectionElem) {
+                const sectionTop = sectionElem.offsetTop;
+                if (scrollPosition >= sectionTop) {
+                    updateNavActiveLinks(sectionId === 'about' ? 'home' : sectionId);
+                    break;
+                }
+            }
+        }
+    }
+
+    window.addEventListener('scroll', handleMobileScrollspy, { passive: true });
+
+    // Intersection Observer for scroll animations on mobile
+    if ('IntersectionObserver' in window) {
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            fadeObserver.observe(el);
+        });
+    } else {
+        document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+    }
+
+    // Window Resize Handler to switch cleanly between Desktop & Mobile modes
+    let previousIsMobile = isMobileMode();
+    window.addEventListener('resize', () => {
+        const currentIsMobile = isMobileMode();
+        if (previousIsMobile !== currentIsMobile) {
+            previousIsMobile = currentIsMobile;
+            const currentRoute = getCurrentRoute();
+            if (!currentIsMobile) {
+                // Switched to Desktop: enforce single active section display
+                setActiveSection(currentRoute, false, false);
+            } else {
+                // Switched to Mobile: reveal all sections
+                document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+                updateNavActiveLinks(currentRoute);
+            }
+        }
+    });
 
     // Attach click listeners to all hash links
     document.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -1045,7 +1252,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (href && href !== '#') {
                 e.preventDefault();
                 const route = href.replace('#', '');
-                setActiveSection(route, false);
+
+                // Close mobile dropdown menu if open
+                const mobileNavMenu = document.getElementById('mobileNavMenu');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const navBackdrop = document.getElementById('navBackdrop');
+                if (mobileNavMenu && mobileNavMenu.classList.contains('active')) {
+                    mobileNavMenu.classList.remove('active');
+                    if (mobileMenu) mobileMenu.classList.remove('active');
+                    if (navBackdrop) navBackdrop.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+
+                setActiveSection(route, false, true);
                 updateCleanUrl(route, true);
             }
         });
@@ -1053,12 +1272,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle browser navigation (back/forward)
     window.addEventListener('popstate', () => {
-        setActiveSection(getCurrentRoute(), false);
+        setActiveSection(getCurrentRoute(), false, !isMobileMode());
     });
 
-    // Initialize SPA section on page load
+    // Initialize section on page load
     const initialRoute = getCurrentRoute();
-    setActiveSection(initialRoute, true);
+    setActiveSection(initialRoute, true, false);
 
     // --- THEME TOGGLE LOGIC ---
     const themeToggleBtns = document.querySelectorAll('.theme-toggle-btn');

@@ -47,33 +47,57 @@
 
 <body>
 
-    <!-- Sidebar Overlay Backdrop for Mobile -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- Desktop & Mobile Left Sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-profile-row">
-                <div class="sidebar-avatar">
+    <!-- Top Horizontal Glassmorphic Navigation Bar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Brand / Profile -->
+            <a href="#home" class="nav-brand" aria-label="Somenath Sau - Home">
+                <div class="nav-brand-avatar">
                     <img src="resources/assets/hero/Somenath_Sau.webp" 
                          srcset="resources/assets/hero/Somenath_Sau-small.webp 600w, resources/assets/hero/Somenath_Sau.webp 1200w" 
-                         sizes="60px" 
+                         sizes="38px" 
                          alt="Somenath Sau"
                          fetchpriority="high">
                 </div>
-                <div class="sidebar-info">
-                    <h2 class="sidebar-name" id="sidebarName">SOMENATH SAU</h2>
-                    <p class="sidebar-role" id="sidebarRole">Data Analyst</p>
+                <div class="nav-brand-text">
+                    <span class="nav-name">SOMENATH SAU</span>
+                    <span class="nav-role">Data Analyst</span>
                 </div>
-            </div>
-
-            <a href="javascript:void(0)" class="btn-primary sidebar-resume-btn open-resume-modal">
-                <i data-lucide="download"></i> Download Resume
             </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="nav-links-wrapper" aria-label="Primary Navigation">
+                <ul class="nav-links">
+                    <li><a href="#home" class="active"><i data-lucide="home"></i><span>Home</span></a></li>
+                    <li><a href="#projects"><i data-lucide="folder-git-2"></i><span>Projects</span></a></li>
+                    <li><a href="#skills"><i data-lucide="wrench"></i><span>Skills</span></a></li>
+                    <li><a href="#experience"><i data-lucide="briefcase"></i><span>Experience</span></a></li>
+                    <li><a href="#education"><i data-lucide="graduation-cap"></i><span>Education</span></a></li>
+                    <li><a href="#certifications"><i data-lucide="award"></i><span>Certifications</span></a></li>
+                    <li><a href="#contact"><i data-lucide="mail"></i><span>Connect</span></a></li>
+                </ul>
+            </nav>
+
+            <!-- Navigation Actions: Resume, Theme Toggle & Mobile Menu -->
+            <div class="nav-actions">
+                <a href="javascript:void(0)" class="btn-primary nav-resume-btn open-resume-modal" title="Download Resume">
+                    <i data-lucide="download"></i>
+                    <span>Resume</span>
+                </a>
+                <button class="theme-toggle-btn nav-theme-btn" aria-label="Toggle Theme">
+                    <i data-lucide="sun"></i>
+                </button>
+                <button class="menu-toggle" id="mobile-menu" aria-label="Toggle Navigation Menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
         </div>
 
-        <nav class="sidebar-nav">
-            <ul>
+        <!-- Mobile Glass Menu Dropdown -->
+        <div class="mobile-nav-menu" id="mobileNavMenu">
+            <ul class="mobile-nav-links">
                 <li><a href="#home" class="active"><i data-lucide="home"></i><span>Home</span></a></li>
                 <li><a href="#projects"><i data-lucide="folder-git-2"></i><span>Projects</span></a></li>
                 <li><a href="#skills"><i data-lucide="wrench"></i><span>Skills</span></a></li>
@@ -82,50 +106,19 @@
                 <li><a href="#certifications"><i data-lucide="award"></i><span>Certifications</span></a></li>
                 <li><a href="#contact"><i data-lucide="mail"></i><span>Connect</span></a></li>
             </ul>
-        </nav>
-
-        <div class="sidebar-footer">
-            <div class="sidebar-bottom-row">
-                <div class="sidebar-socials" id="sidebarSocials">
+            <div class="mobile-nav-actions">
+                <a href="javascript:void(0)" class="btn-primary mobile-resume-btn open-resume-modal">
+                    <i data-lucide="download"></i> Download Resume
+                </a>
+                <div class="mobile-nav-socials" id="mobileNavSocials">
                     <!-- Dynamic Social Icons -->
                 </div>
-                <button class="theme-toggle-btn sidebar-theme-btn" aria-label="Toggle Theme">
-                    <i data-lucide="sun"></i>
-                </button>
             </div>
         </div>
-    </aside>
+    </header>
 
-    <!-- Mobile Top Navbar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#home" class="logo"><i data-lucide="code-xml"></i></a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#certifications">Certifications</a></li>
-                <li><a href="#contact" class="btn-primary">Connect</a></li>
-                <li class="desktop-toggle-only">
-                    <button class="theme-toggle-btn" aria-label="Toggle Theme">
-                        <i data-lucide="sun"></i>
-                    </button>
-                </li>
-            </ul>
-            <div class="mobile-nav-right">
-                <div class="menu-toggle" id="mobile-menu">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-                <button class="theme-toggle-btn mobile-toggle-only" aria-label="Toggle Theme">
-                    <i data-lucide="sun"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
+    <!-- Mobile Nav Backdrop Overlay -->
+    <div class="nav-backdrop" id="navBackdrop"></div>
 
     <!-- Main Content Area -->
     <main class="main-content-wrapper" id="mainContent">
@@ -203,6 +196,31 @@
         <div class="container">
             <div id="projectsListContainer">
                 <h2 class="section-title fade-up">Projects</h2>
+
+                <!-- Project Category Slicers -->
+                <div class="project-slicer-container fade-up" id="projectSlicers">
+                    <button class="project-slicer-btn active" data-filter="all">
+                        <i data-lucide="layout-grid"></i>
+                        <span>All Projects</span>
+                    </button>
+                    <button class="project-slicer-btn" data-filter="excel">
+                        <i data-lucide="file-spreadsheet"></i>
+                        <span>Excel</span>
+                    </button>
+                    <button class="project-slicer-btn" data-filter="power-bi">
+                        <i data-lucide="bar-chart-3"></i>
+                        <span>Power BI</span>
+                    </button>
+                    <button class="project-slicer-btn" data-filter="sql">
+                        <i data-lucide="database"></i>
+                        <span>SQL</span>
+                    </button>
+                    <button class="project-slicer-btn" data-filter="python">
+                        <i data-lucide="code-2"></i>
+                        <span>Python</span>
+                    </button>
+                </div>
+
                 <div class="projects-grid" id="projectsGrid">
                     <!-- Dynamic Content -->
                 </div>

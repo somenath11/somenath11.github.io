@@ -18,8 +18,9 @@ const californiaRetailProject = {
         "Implement targeted promotional campaigns and customer loyalty incentives during low-volume sales months.",
         "Automate data refresh pipelines to provide management with real-time alerts on sales anomalies and stock depletion."
     ],
-    techStack: ["DAX", "Data Visualization", "Excel Data Model", "Microsoft Excel", "Power Pivot"],
-    category: "Business Intelligence",
+    techStack: ["Microsoft Excel", "Excel Data Model", "Power Pivot", "DAX", "Data Visualization"],
+    category: "Retail Analytics",
+    datasetScope: "99K+ Records",
     image: "resources/assets/images/CMCS2123.png",
     images: [
         "resources/assets/images/CMCS2123.png",

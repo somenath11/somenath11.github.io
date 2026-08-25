@@ -16,8 +16,9 @@ const crimeDataProject = {
         "Establish unified inter-state crime data reporting protocols to track cross-border criminal patterns in real-time.",
         "Deploy automated public alert systems and community awareness programs in identified high-risk zones."
     ],
-    techStack: ["Python", "Matplotlib", "Scikit-learn", "Pandas"],
-    category: "Data Analysis",
+    techStack: ["Python", "SQL", "Pandas", "Matplotlib", "Scikit-learn"],
+    category: "Public Sector EDA",
+    datasetScope: "National Dataset",
     image: "resources/assets/images/crime_correlation_heatmap.webp",
     images: [
         "resources/assets/images/crime_correlation_heatmap.webp"
